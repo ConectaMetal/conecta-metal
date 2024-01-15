@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% include "main/partials/head.html" %}
+    <title>Produto | </title>
+</head>
+<body>
+    {% include "main/partials/header.html" %}
+
+    <div class="product-container">
+        <div class="product-cover">
+            <img src="parafusos.jpg" class="product-cover-img">
+        </div>
+        <div class="product-separator">
+            
+        </div>
+        <div class="product-title">
+            <h1>Nome do Produto</h1>
+        </div>
+        <div class="product-values">
+            <div class="product-values-grade">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star-half-stroke"></i>
+                <i class="fa-regular fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+            <div class="product-values-value">
+                <h2>R$ Valor</h2>
+            </div>
+        </div>
+        <div class="product-description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sagittis, nisi eu malesuada aliquet, libero orci ultricies augue, eget dictum justo nulla vulputate sapien. Sed eros nulla, consectetur quis lacinia sed, sollicitudin a metus. Vestibulum a massa scelerisque, convallis est ac, rhoncus ipsum. Aliquam erat volutpat. Donec sit amet bibendum ex. Maecenas mattis dui sit amet tempus congue. Aliquam quam mi, rutrum vel blandit eget, ultrices sed elit. Morbi accumsan, lorem eu mattis consequat, nisl dolor venenatis ex, non tempor lorem massa vel nulla. 
+        </div>
+        <div class="product-owner">
+            <i class="fa-solid fa-user"></i> Nome da Empresa
+        </div>
+        <div class="product-to-cart">
+            <button><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
+        </div>
+    </div>
+
+    {% include "main/partials/footer.html" %}
+</body>
+</html>
