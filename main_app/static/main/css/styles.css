@@ -55,8 +55,8 @@ body{
 }
 
 .main-header-logo {
-    max-width: 7rem;
-    max-height: 7rem;
+    max-width: 9rem;
+    max-height: 9rem;
 }
 
 .main-header-container a, 
@@ -69,8 +69,9 @@ body{
     padding: 1rem;
 }
 
-.main-header-nav-button:hover {
-    background-color: rgba(0, 0, 0, .1);
+.main-header-nav-button:hover,
+.main-header-nav-button i:hover {
+    color: var(--color-primary);
 }
 
 .main-header-left,
@@ -227,6 +228,7 @@ body{
 }
 
 .main-content-list {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: var(--spacing-gutter-medium);
@@ -246,10 +248,72 @@ body{
 
 .card {
     max-width: 32rem;
+    border-radius: 10px;
+    border: .15rem solid var(--color-black);
+    background-color: var(--color-white);
+    box-shadow: -.5rem .5rem 1rem rgba(0, 0, 0, .2);
+    overflow: hidden;
+}
+
+.card a {
+    text-decoration: none;
+    color: var(--color-black);
 }
 
 .card-cover img {
     width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+    border-bottom: .1rem solid var(--color-black);
+}
+
+.card-title {
+    padding: .5rem;
+}
+
+.card-value {
+    padding: .5rem;
+}
+
+.card-details {
+    padding: .5rem;
+}
+
+.card-info {
+    padding: .5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.card-rating {
+    width: 50%;
+    color: #ffe400;
+}
+
+.card-owner {
+    width: 50%;
+}
+
+.card-button {
+    margin: .5rem;
+}
+
+.card-button button {
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-black);
+    color: var(--color-gray-0);
+    padding: 1rem;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.card-button button:hover {
+    color: var(--color-primary);
+    background-color: var(--color-gray-9);
 }
 
 /* PRODUCT.HTML */
