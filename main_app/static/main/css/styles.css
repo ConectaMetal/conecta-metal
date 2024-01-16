@@ -285,7 +285,7 @@ body{
     padding: 1rem;
 }
 
-.product-grade {
+.product-rating {
     background-color: var(--color-gray-8);
     display: flex;
     align-items: center;
@@ -293,7 +293,7 @@ body{
     padding: 2rem 1rem;
 }
 
-.product-grade i {
+.product-rating i {
     color: #ffe400;
     padding: .5rem;
 }
