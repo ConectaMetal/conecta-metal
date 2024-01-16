@@ -242,6 +242,16 @@ body{
     margin: var(--spacing-gutter-small);
 }
 
+/* CARD.HTML */
+
+.card {
+    max-width: 32rem;
+}
+
+.card-cover img {
+    width: 100%;
+}
+
 /* PRODUCT.HTML */
 
 .product-container {
