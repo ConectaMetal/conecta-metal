@@ -213,8 +213,9 @@ body{
 
 .main-content-option-button {
     outline: none;
-    background: var(--color-gray-2);
-    border: .1rem solid var(--color-gray-9);
+    background: var(--color-gray-1);
+    /* border: .1rem solid var(--color-gray-9); */
+    border: none;
     border-bottom: none;
     border-radius: 10px 10px 0 0;
     width: 8rem;
@@ -222,7 +223,7 @@ body{
 }
 
 .main-content-option-button:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: var(--color-gray-2);
 }
 
 .main-content-list {
@@ -230,10 +231,8 @@ body{
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: var(--spacing-gutter-medium);
     padding: var(--spacing-gutter-small);
-    border-radius: 10px;
-    border: .1rem solid var(--color-gray-9);
     /* DEBUG CODES */
-    background-color: var(--color-primary-light);
+    background-color: var(--color-gray-1);
 }
 
 .placeholder {
@@ -252,7 +251,7 @@ body{
     max-width: 64rem;
     display: flex;
     flex-flow: column;
-    background-color: var(--color-white);
+    background-color: var(--color-gray-1);
 }
 
 .product-cover-img {
