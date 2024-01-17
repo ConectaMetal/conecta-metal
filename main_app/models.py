@@ -27,7 +27,20 @@ class SocialMedia(models.Model):
 
 
 class Products(models.Model):
-    ...
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255)
+    picture = models.ImageField(upload_to='main/products/%Y/%m/%d/')
+    details = models.CharField(max_length=255)
+    description = models.TextField(max_length=1000)
+    value = models.DecimalField(max_digits=20, decimal_places=2)
+    stock = models.DecimalField(max_digits=20, decimal_places=2)
+    rating = models.FloatField()
+    company = models.ForeignKey(
+        Companies, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Services(models.Model):

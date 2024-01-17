@@ -1,19 +1,19 @@
 <div class="card main-content-list-item">
     <a href="product/">
         <div class="card-cover">
-            <img src="https://placehold.co/2000x1000/FFFFFF/000000.png" alt="">
+            <img src="{{ product.picture.url }}" alt="">
         </div>
 
         <div class="card-title">
-            <h2>Parafusos</h2>
+            <h2>{{ product.name }}</h2>
         </div>
 
         <div class="card-value">
-            R$ 172,95
+            R$ {{ product.value }}
         </div>
 
         <div class="card-details">
-            <p>Lorem ipsum lorem ipsum ipsum lorem.</p>
+            <p>{{ product.details }}</p>
         </div>
 
         <div class="card-info">
@@ -27,7 +27,7 @@
 
             <div class="card-owner">
                 <i class="fa-solid fa-user"></i>
-                Jomarca
+                {{ product.company.businessName }}
             </div>
         </div>
     </a>
