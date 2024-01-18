@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Companies(models.Model):
@@ -23,7 +24,29 @@ class Companies(models.Model):
 
 
 class SocialMedia(models.Model):
-    ...
+
+    class SocialMediaName(models.TextChoices):
+        WhatsApp = 'WhatsApp', _('Whatsapp')
+        Instagram = 'Instagram', _('Instagram')
+        Facebook = 'Facebook', _('Facebook')
+        TikTok = 'TikTok', _('TikTok')
+        Telegram = 'Telegram', _('Telegram')
+        Kwai = 'Kwai', _('Kwai')
+        Twitter = 'Twitter', _('Twitter')
+        Pinterest = 'Pinterest', _('Pinterest')
+        LinkedIn = 'LinkedIn', _('LinkedIn')
+        Snapchat = 'Snapchat', _('Snapchat')
+
+    name = models.CharField(
+        max_length=9, choices=SocialMediaName.choices, default=SocialMediaName.Instagram
+    )
+    link = models.CharField(max_length=255)
+    company = models.ForeignKey(
+        Companies, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Products(models.Model):
