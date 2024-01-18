@@ -9,25 +9,25 @@
 
     <div class="product-container">
         <div class="product-cover">
-            <img src="https://placehold.co/2000x1000/FFFFFF/000000.png" class="product-cover-img">
+            <img src="{{ product.picture.url }}" class="product-cover-img">
         </div>
 
         <div class="product-info">
             <div class="product-title">
-                <h1>Caixa de Parafusos</h1>
+                <h1>{{ product.name }}</h1>
             </div>
             <div class="product-owner">
                 <i class="fa-solid fa-user"></i>
-                Ciser
+                {{ product.company.businessName }}
             </div>
         </div>
 
         <div class="product-value">
-            <h2>R$ 172,95</h2>
+            <h2>R$ {{ product.value }}</h2>
         </div>
 
         <div class="product-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sagittis, nisi eu malesuada aliquet, libero orci ultricies augue, eget dictum justo nulla vulputate sapien. Sed eros nulla, consectetur quis lacinia sed, sollicitudin a metus. Vestibulum a massa scelerisque, convallis est ac, rhoncus ipsum. Aliquam erat volutpat. Donec sit amet bibendum ex. Maecenas mattis dui sit amet tempus congue. Aliquam quam mi, rutrum vel blandit eget, ultrices sed elit. Morbi accumsan, lorem eu mattis consequat, nisl dolor venenatis ex, non tempor lorem massa vel nulla. 
+            {{ product.description }}
         </div>
 
         <div class="product-rating">

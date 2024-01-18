@@ -324,11 +324,17 @@ body{
     background-color: var(--color-gray-1);
 }
 
-.product-cover-img {
+.product-cover {
     max-width: 100%;
-    max-height: auto;
+}
+
+.product-cover-img {
+    width: 100%;
+    height: auto;
+    /* object-fit: cover; */
     border-radius: 10px 10px 0 0;
     border-bottom: .15rem solid #000;
+    
 }
 
 .product-info {
@@ -344,7 +350,7 @@ body{
 }
 
 .product-value {
-    margin: 0 1rem 1rem 1rem;
+    margin: 1rem;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
