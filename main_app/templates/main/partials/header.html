@@ -3,7 +3,7 @@
 <header class="main-header-container">
     <div class="main-header-left">
         <img src="{% static 'main/img/cm-square-logo.png' %}" alt="CM" class="main-header-logo">
-        <a href="/" class="main-header-nav-button">
+        <a href="{% url "main_app:home" %}" class="main-header-nav-button">
             Início
         </a>
         <a href="" class="main-header-nav-button">

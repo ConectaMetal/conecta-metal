@@ -16,3 +16,7 @@ def product(request, slug):
     context = {'product': product}
 
     return render(request=request, template_name='main/pages/product.html', context=context)
+
+
+def sign(request):
+    return render(request=request, template_name='main/pages/sign.html')
