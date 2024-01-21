@@ -52,7 +52,7 @@ class SocialMedia(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    picture = models.ImageField(upload_to='main/products/%Y/%m/%d/')
+    picture = models.ImageField(upload_to='main/products/%Y/%m/%d/', )
     details = models.CharField(max_length=255)
     description = models.TextField(max_length=1000)
     value = models.DecimalField(max_digits=20, decimal_places=2)

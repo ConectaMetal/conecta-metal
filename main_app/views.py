@@ -19,4 +19,7 @@ def product(request, slug):
 
 
 def sign(request):
-    return render(request=request, template_name='main/pages/sign.html')
+    context = {
+        'is_sign_page': True,
+    }
+    return render(request=request, template_name='main/pages/sign.html', context=context)
