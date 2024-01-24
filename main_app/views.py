@@ -4,8 +4,11 @@ from utils.main.rating import product_rating
 
 # Create your views here.
 def home(request):
-    products = Products.objects.all().order_by('-id')
+    products = Products.objects.filter(
+        company__isPartner=True
+    ).order_by('-id')
     context = {'products': products, 'product_rating': product_rating}
+
     return render(request=request, template_name='main/pages/home.html', context=context)
 
 

@@ -14,11 +14,12 @@
                     <h2>{{ company.legalName }}</h2>
                 </div>
                 <div class="company-rating">
+                    {% comment %} <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i> {% endcomment %}
+                    {% include "main/partials/company-rating.html" %}
                 </div>
             </div>
         </div>

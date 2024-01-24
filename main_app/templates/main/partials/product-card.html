@@ -15,18 +15,20 @@
         <div class="card-details">
             <p>{{ product.details }}</p>
         </div>
-
+    </a>
         <div class="card-info">
             <div class="card-rating">
                 {% include "main/partials/products-rating.html" %}
             </div>
 
             <div class="card-owner">
-                <i class="fa-solid fa-user"></i>
-                {{ product.company.businessName }}
+                <a href="company/{{ product.company.slug }}">
+                    {% comment %} <i class="fa-solid fa-user"></i> {% endcomment %}
+                    <img src="{{ product.company.profilePic.url }}" alt="">
+                    {{ product.company.businessName }}
+                </a>
             </div>
         </div>
-    </a>
     <div class="card-button">
         <button><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
     </div>
