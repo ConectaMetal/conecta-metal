@@ -35,12 +35,15 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background-image: url('../img/background.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     font-family: helvetica, sans-serif;
+    /* min-height: 100vh;
+    max-height: fit-content;
+    position: relative; */
 }
 
 /* HEADER.HTML */
@@ -89,7 +92,7 @@ body{
 /* SEARCH.HTML */
 
 .search-container {
-    padding: var(--spacing-gutter-medium);
+    padding: var(--spacing-gutter-large);
 }
 
 .search-bar {
@@ -149,11 +152,14 @@ body{
 
 .main-footer-container {
     background-color: var(--color-gray-8);
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
     height: 4rem;
+    /* position: absolute;
+    bottom: 0; */
 }
 
 .main-footer-info {
@@ -197,14 +203,14 @@ body{
 
 /* PRODUCTS.HTML */
 
-.main-content-container {
+.main-products-container {
     width: 100%;
-    margin: var(--spacing-gutter-medium) 0;
+    margin:  0 0 var(--spacing-gutter-large) 0;
     /* DEBUG CODES */
     /* background-color: var(--color-red-debug); */
 }
 
-.main-content-option {
+.main-products-option {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -212,7 +218,7 @@ body{
     max-width: 50rem;
 }
 
-.main-content-option-button {
+.main-products-option-button {
     outline: none;
     background: rgba(224, 224, 224, .75);
     /* border: .1rem solid var(--color-gray-9); */
@@ -223,11 +229,11 @@ body{
     padding: .5rem;
 }
 
-.main-content-option-button:hover {
+.main-products-option-button:hover {
     background-color: var(--color-gray-2);
 }
 
-.main-content-list {
+.main-products-list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -237,7 +243,7 @@ body{
     background-color: rgba(224, 224, 224, .75);
 }
 
-/* CARD.HTML */
+/* PRODUCT-CARD.HTML */
 
 .card {
     max-width: 32rem;
@@ -394,4 +400,53 @@ body{
 .product-button button:hover {
     color: var(--color-primary);
     background-color: var(--color-gray-9);
+}
+
+/* COMPANY.HTML */
+
+.company-container {
+    margin: var(--spacing-gutter-large) auto;
+    border-radius: 10px;
+    border: .2rem solid #000;
+    max-width: 64rem;
+    display: flex;
+    flex-flow: column;
+    background-color: var(--color-gray-1);
+}
+
+.company-identification {
+    display: flex;
+    flex-flow: row;
+    margin: 0 var(--spacing-gutter-extra-small);
+    border-bottom: .15rem solid #000;
+}
+
+.company-cover {
+    width: 40%;
+    background-color: rgba(0, 0, 0, .15);
+    border-radius: 100%;
+    margin: var(--spacing-gutter-extra-small);
+}
+
+.company-cover img {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.company-info {
+    width: 60%;
+    margin: var(--spacing-gutter-extra-small);
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.company-names {
+    width: 100%;
+}
+
+.company-names h1 {
+    font-size: 3rem;
+    font-weight: bolder;
+
 }

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    {% include "main/partials/head.html" %}
-    <title>Produto | {{ product.name }}</title>
-</head>
-<body>
-    {% include "main/partials/header.html" %}
+{% extends "main/base/base.html" %}
 
+{% block title %}Produto | {{ product.name }}{% endblock title %}
+
+{% block content %}
     <div class="product-container">
         <div class="product-cover">
             <img src="{{ product.picture.url }}" class="product-cover-img">
@@ -38,7 +34,4 @@
             <button><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
         </div>
     </div>
-
-    {% include "main/partials/footer.html" %}
-</body>
-</html>
+{% endblock content %}

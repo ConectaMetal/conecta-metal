@@ -1,0 +1,47 @@
+{% extends "main/base/base.html" %}
+
+{% block title %}Empresa | {% endblock title %}
+
+{% block content %}
+    <div class="company-container">
+        <div class="company-identification">
+            <div class="company-cover">
+                <img src="{{ company.profilePic.url }}" alt="">
+            </div>
+            <div class="company-info">
+                <div class="company-names">
+                    <h1>{{ company.businessName }}</h1>
+                    <h2>{{ company.legalName }}</h2>
+                </div>
+                <div class="company-rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-description">
+            <p>Lorem ipsum mother fucka</p>
+        </div>
+
+        <div class="company-products">
+
+        </div>
+
+        <div class="company-services">
+
+        </div>
+
+        <div class="company-contact">
+            <div class="company-email">{{ company.email }}</div>
+            <div class="company-phone">{{ company.phoneNumber }}</div>
+        </div>
+
+        <div class="company-social">
+
+        </div>
+    </div>
+{% endblock content %}

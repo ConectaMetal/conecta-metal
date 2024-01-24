@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    {% include "main/partials/head.html" %}
-    <title>Início</title>
-</head>
-<body>
-    {% include "main/partials/header.html" %}
+{% extends "main/base/base.html" %}
+
+{% block title %}Início{% endblock title %}
+
+{% block content %}
     {% include "main/partials/search.html" %}
     {% include "main/partials/products.html" %}
-    {% include "main/partials/footer.html" %}
-</body>
-</html>
+{% endblock content %}

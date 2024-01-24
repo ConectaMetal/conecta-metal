@@ -1,11 +1,11 @@
-<div class="main-content-container">
-    <div class="main-content-option">
-        <button class="main-content-option-button" name="products">Produtos</button>
-        <button class="main-content-option-button" name="services">Serviços</button>
+<div class="main-products-container">
+    <div class="main-products-option">
+        <button class="main-products-option-button" name="products">Produtos</button>
+        <button class="main-products-option-button" name="services">Serviços</button>
     </div>
-    <div class="main-content-list">
+    <div class="main-products-list">
         {% for product in products %}
-            {% include "main/partials/products-card.html" %}
+            {% include "main/partials/product-card.html" %}
         {% endfor %}
     </div>
 </div>
