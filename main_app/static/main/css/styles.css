@@ -376,6 +376,29 @@ body {
     width: 75%;
 }
 
+.product-owner a {
+    transition: all 300ms ease-in-out;
+    font-weight: bold;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-black);
+    font-size: large;
+}
+
+.product-owner a:hover {
+    color: var(--color-primary);    
+}
+
+.product-owner img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    margin-right: .5rem;
+    background-color: rgba(0, 0, 0, .15);
+}
+
 .product-value {
     margin: 1rem;
     display: flex;
@@ -410,7 +433,7 @@ body {
     width: 100%;
     outline: none;
     border: none;
-    border-radius: 0;
+    border-radius: 0 0 5px 5px;
     background-color: var(--color-black);
     color: var(--color-gray-0);
     padding: 1rem;
@@ -438,8 +461,8 @@ body {
 .company-identification {
     display: flex;
     flex-flow: row;
-    margin: 0 var(--spacing-gutter-extra-small);
-    padding: var(--spacing-gutter-extra-small) 0;
+    margin: var(--spacing-gutter-extra-small) var(--spacing-gutter-extra-small) 0 var(--spacing-gutter-extra-small);;
+    padding: 0 0 var(--spacing-gutter-extra-small) 0;
     border-bottom: .15rem solid #000;
 }
 
@@ -490,4 +513,34 @@ body {
 
 .company-description {
     margin: var(--spacing-gutter-small);
+}
+
+.company-products {
+    margin: var(--spacing-gutter-small);
+}
+
+.company-products h2{
+    text-align: center;
+    border-bottom: .15rem solid #000;
+}
+
+.company-products-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 80px));
+    gap: var(--spacing-gutter-extra-small);
+    padding: var(--spacing-gutter-extra-small);
+}
+
+.main-company-card-container {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, .15);
+}
+
+.main-company-card-container img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 10px;
 }

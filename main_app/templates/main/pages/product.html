@@ -13,8 +13,10 @@
                 <h1>{{ product.name }}</h1>
             </div>
             <div class="product-owner">
-                <i class="fa-solid fa-user"></i>
-                {{ product.company.businessName }}
+                <a href="{% url 'main_app:company' product.company.slug %}">
+                    <img src="{{ product.company.profilePic.url }}" alt="">
+                    {{ product.company.businessName }}
+                </a>
             </div>
         </div>
 

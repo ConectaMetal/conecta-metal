@@ -22,8 +22,7 @@
             </div>
 
             <div class="card-owner">
-                <a href="company/{{ product.company.slug }}">
-                    {% comment %} <i class="fa-solid fa-user"></i> {% endcomment %}
+                <a href="{% url 'main_app:company' product.company.slug %}">
                     <img src="{{ product.company.profilePic.url }}" alt="">
                     {{ product.company.businessName }}
                 </a>

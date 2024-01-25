@@ -7,7 +7,7 @@ def home(request):
     products = Products.objects.filter(
         company__isPartner=True
     ).order_by('-id')
-    context = {'products': products, 'product_rating': product_rating}
+    context = {'products': products, 'product_rating': product_rating, 'show_products': True}
 
     return render(request=request, template_name='main/pages/home.html', context=context)
 
@@ -24,7 +24,10 @@ def company(request, slug):
     company = get_object_or_404(
         Companies, slug=slug
     )
-    context = {'company': company}
+    products = Products.objects.filter(
+        company__id=company.id
+    ).order_by('-id')
+    context = {'company': company, 'products': products}
 
     return render(request=request, template_name='main/pages/company.html', context=context)
 

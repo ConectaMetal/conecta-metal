@@ -1,6 +1,6 @@
 {% extends "main/base/base.html" %}
 
-{% block title %}Empresa | {% endblock title %}
+{% block title %}Empresa | {{ company.businessName }}{% endblock title %}
 
 {% block content %}
     <div class="company-container">
@@ -14,22 +14,22 @@
                     <h2>{{ company.legalName }}</h2>
                 </div>
                 <div class="company-rating">
-                    {% comment %} <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i> {% endcomment %}
                     {% include "main/partials/company-rating.html" %}
                 </div>
             </div>
         </div>
 
         <div class="company-description">
-            <p>Lorem ipsum mother fucka</p>
+            <p>{{ company.description }}</p>
         </div>
 
         <div class="company-products">
-
+            <h2>Produtos</h2>
+            <div class="company-products-list">
+                {% for product in products %}
+                    {% include "main/partials/company-card.html" %}
+                {% endfor %}
+            </div>
         </div>
 
         <div class="company-services">
