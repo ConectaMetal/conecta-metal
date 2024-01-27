@@ -7,7 +7,7 @@ class Companies(models.Model):
     CNPJ = models.CharField(max_length=14)
     legalName = models.CharField(max_length=255)
     businessName = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
     profilePic = models.ImageField(upload_to='main/prof_pics/%Y/%m/%d/')
     description = models.TextField(null=True, blank=True, default=None)
     registrationStatus = models.CharField(max_length=100)
@@ -52,7 +52,7 @@ class SocialMedia(models.Model):
 
 class Products(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
     picture = models.ImageField(upload_to='main/products/%Y/%m/%d/', )
     details = models.CharField(max_length=255)
     description = models.TextField()
@@ -69,6 +69,18 @@ class Products(models.Model):
 
 class Services(models.Model):
     ...
+
+class BuyCart(models.Model):
+    customer = models.ForeignKey(
+        Companies, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    product = models.ForeignKey(
+        Products, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    amount = models.DecimalField(max_digits=20, decimal_places=5)
+
+    def __str__(self):
+        return self.product
 
 
 class Invoice(models.Model):

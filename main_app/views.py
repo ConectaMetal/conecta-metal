@@ -1,13 +1,27 @@
+from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404
 from main_app.models import Products, Companies
-from utils.main.rating import product_rating
 
 # Create your views here.
 def home(request):
-    products = Products.objects.filter(
-        company__isPartner=True
-    ).order_by('-id')
-    context = {'products': products, 'product_rating': product_rating, 'show_products': True}
+
+    search_term = request.GET.get('search', '').strip()
+
+    if not search_term:
+        products = Products.objects.filter(
+            company__isPartner=True
+        ).order_by('-id')
+    else:
+        products = Products.objects.filter(
+            company__isPartner=True,
+            name__icontains=search_term
+        )
+
+    context = {
+        'products': products, 
+        'show_products': True,
+        'search_term': search_term,
+    }
 
     return render(request=request, template_name='main/pages/home.html', context=context)
 
@@ -36,3 +50,11 @@ def sign(request):
         'is_sign_page': True,
     }
     return render(request=request, template_name='main/pages/sign.html', context=context)
+
+
+def search(request):
+    
+
+    
+    
+    return render(request=request, template_name='main/pages/home.html')

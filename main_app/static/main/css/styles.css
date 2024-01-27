@@ -246,7 +246,8 @@ body {
 /* PRODUCT-CARD.HTML */
 
 .card {
-    max-width: 32rem;
+    /* max-width: 32rem; */
+    max-width: 385px;
     border-radius: 10px;
     border: .15rem solid var(--color-black);
     background-color: var(--color-white);
@@ -263,7 +264,7 @@ body {
 
 .card-cover img {
     width: 100%;
-    height: auto;
+    max-height: auto;
     border-radius: 10px 10px 0 0;
     border-bottom: .1rem solid var(--color-black);
     object-fit: cover;
@@ -543,4 +544,11 @@ body {
     width: 5rem;
     height: 5rem;
     border-radius: 10px;
+}
+
+.company-contact {
+    margin: var(--spacing-gutter-extra-small);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
 }
