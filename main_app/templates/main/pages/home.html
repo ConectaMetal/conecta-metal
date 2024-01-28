@@ -1,8 +1,10 @@
 {% extends "main/base/base.html" %}
 
+{% block styles %}{% endblock styles %}
+
 {% block title %}Início{% endblock title %}
 
 {% block content %}
     {% include "main/partials/search.html" %}
-    {% include "main/partials/products.html" %}
+    {% include "main/partials/home-products.html" %}
 {% endblock content %}

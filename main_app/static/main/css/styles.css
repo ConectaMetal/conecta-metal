@@ -354,15 +354,19 @@ body {
 
 .product-cover {
     max-width: 100%;
+    border-bottom: .15rem solid #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-cover-img {
-    width: 100%;
+    max-width: 60rem;
     height: auto;
     /* object-fit: cover; */
-    border-radius: 10px 10px 0 0;
-    border-bottom: .15rem solid #000;
-    
+    border-radius: 10px;
+    margin: 2rem 0;
 }
 
 .product-info {
