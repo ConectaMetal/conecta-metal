@@ -41,6 +41,7 @@ class SocialMedia(models.Model):
     name = models.CharField(
         max_length=9, choices=SocialMediaName.choices, default=SocialMediaName.Instagram
     )
+    icon = models.TextField(blank=True, null=True)
     link = models.CharField(max_length=255)
     company = models.ForeignKey(
         Companies, on_delete=models.SET_NULL, null=True, blank=True
@@ -53,7 +54,10 @@ class SocialMedia(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    picture = models.ImageField(upload_to='main/products/%Y/%m/%d/', )
+    mainPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/')
+    secondPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
+    thirdPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
+    fourthPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
     details = models.CharField(max_length=255)
     description = models.TextField()
     value = models.DecimalField(max_digits=20, decimal_places=2)

@@ -4,10 +4,10 @@
     <div class="main-header-left">
         <img src="{% static 'main/img/cm-square-logo.png' %}" alt="CM" class="main-header-logo">
         <a href="{% url "main_app:home" %}" class="main-header-nav-button">
-            Início
+            <p>Início</p>
         </a>
         <a href="" class="main-header-nav-button">
-            Postagens
+            <p>Postagens</p>
         </a>
     </div>
     <div class="main-header-right">
@@ -18,9 +18,22 @@
             <a href="" class="main-header-nav-button icon-button">
                 <i class="fa-solid fa-message"></i>
             </a>
-            <a href="" class="main-header-nav-button icon-button">
-                <i class="fa-solid fa-user"></i>
-            </a>
+            <div class="profile-dropdown main-header-nav-button icon-button">
+                <button class="profile-dropbtn"><i class="fa-solid fa-user"></i></button>
+                <div class="profile-dropdown-content">
+                    {% comment %} {% if logado %} {% endcomment %}
+                        <p>Olá, "nome"</p>
+                        <div class="profile-dropdown-separator"></div>
+                        <a href="#">Perfil</a>
+                        <a href="#">Histórico</a>
+                        <div class="profile-dropdown-separator"></div>
+                        <a href="#">Sair</a>
+                    {% comment %} {% else %} {% endcomment %}
+                        <a href="#">Logar</a>
+                        <a href="#">Criar conta</a>
+                    {% comment %} {% endif %} {% endcomment %}
+                </div>
+              </div>
         {% endif %}
     </div>
 </header>

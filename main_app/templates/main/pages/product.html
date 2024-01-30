@@ -5,7 +5,21 @@
 {% block content %}
     <div class="product-container">
         <div class="product-cover">
-            <img src="{{ product.picture.url }}" class="product-cover-img">
+            <div class="product-options">
+                <button><img src="{{ product.mainPicture.url }}" alt=""></button>
+                {% if product.secondPicture %}
+                    <button><img src="{{ product.secondPicture.url }}" alt=""></button>
+                {% endif %}
+                {% if product.thirdPicture %}
+                    <button><img src="{{ product.thirdPicture.url }}" alt=""></button>
+                {% endif %}
+                {% if product.fourthPicture %}
+                    <button><img src="{{ product.fourthPicture.url }}" alt=""></button>
+                {% endif %}
+            </div>
+            <div class="product-img">
+                <img src="{{ product.mainPicture.url }}" class="product-cover-img">
+            </div>
         </div>
 
         <div class="product-info">
