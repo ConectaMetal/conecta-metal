@@ -153,9 +153,6 @@ body {
     background-color: var(--color-gray-7);
 }
 
-
-
-
 /* SEARCH.HTML */
 
 .search-container {
@@ -273,8 +270,6 @@ body {
 .main-products-container {
     width: 100%;
     margin:  0 0 var(--spacing-gutter-large) 0;
-    /* DEBUG CODES */
-    /* background-color: var(--color-red-debug); */
 }
 
 .main-products-option {
@@ -288,12 +283,13 @@ body {
 .main-products-option-button {
     outline: none;
     background: rgba(224, 224, 224, .75);
-    /* border: .1rem solid var(--color-gray-9); */
     border: none;
     border-bottom: none;
     border-radius: 10px 10px 0 0;
-    width: 8rem;
-    padding: .5rem;
+    width: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    padding: .75rem;
 }
 
 .main-products-option-button:hover {
