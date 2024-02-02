@@ -72,7 +72,20 @@ class Products(models.Model):
 
 
 class Services(models.Model):
-    ...
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    mainPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/')
+    secondPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/', null=True, blank=True)
+    thirdPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/', null=True, blank=True)
+    details = models.CharField(max_length=255)
+    description = models.TextField()
+    rating = models.FloatField()
+    company = models.ForeignKey(
+        Companies, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.name
 
 class BuyCart(models.Model):
     customer = models.ForeignKey(
