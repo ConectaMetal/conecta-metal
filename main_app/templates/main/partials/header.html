@@ -29,8 +29,8 @@
                         <div class="profile-dropdown-separator"></div>
                         <a href="#">Sair</a>
                     {% comment %} {% else %} {% endcomment %}
-                        <a href="#">Logar</a>
-                        <a href="#">Criar conta</a>
+                        <a href="{% url "main_app:login" %}">Logar</a>
+                        <a href="{% url "main_app:register" %}">Criar conta</a>
                     {% comment %} {% endif %} {% endcomment %}
                 </div>
               </div>

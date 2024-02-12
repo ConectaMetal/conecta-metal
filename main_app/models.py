@@ -4,18 +4,23 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Companies(models.Model):
-    CNPJ = models.CharField(max_length=14)
+    CNPJ = models.CharField(max_length=50)
     legalName = models.CharField(max_length=255)
     businessName = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     profilePic = models.ImageField(upload_to='main/prof_pics/%Y/%m/%d/')
     description = models.TextField(null=True, blank=True, default=None)
     registrationStatus = models.CharField(max_length=100)
     CEP = models.CharField(max_length=10)
-    address = models.CharField(max_length=255)
+    state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    neigborhood = models.CharField(max_length=255)
+    streetAddress = models.CharField(max_length=255)
+    addressNumber = models.CharField(max_length=255)
+    complement = models.CharField(max_length=100, blank=True)
     phoneNumber = models.CharField(max_length=20, blank=True)
-    email = models.CharField(max_length=255)
-    rating = models.FloatField()
+    email = models.EmailField(max_length=255)
     validatingDocument = models.FileField()
     isPartner = models.BooleanField(default=False)
     isValid = models.BooleanField(default=False)
@@ -86,6 +91,7 @@ class Services(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class BuyCart(models.Model):
     customer = models.ForeignKey(

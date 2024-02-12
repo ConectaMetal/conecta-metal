@@ -1,12 +1,14 @@
 from django.http.response import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.db.models import Q
 from main_app.models import Products, Companies, SocialMedia
 from utils.pagination import make_pagination
+from .forms import RegisterForm
 
 import os
 
-PER_PAGE = os.environ.get('PER_PAGE', 30)
+PER_PAGE = int(os.environ.get('PER_PAGE', 30))
 
 # Create your views here.
 def home(request):
@@ -66,9 +68,41 @@ def company(request, slug):
     return render(request=request, template_name='main/pages/company.html', context=context)
 
 
-def sign(request):
+def register_view(request):
+    register_form_data = request.session.get('register_form_data', None)
+    form = RegisterForm(register_form_data)
+
+    context = {
+        'is_sign_page': True,
+        'form': form,
+    }
+
+    return render(request=request, template_name='main/pages/register.html', context=context)
+
+
+def register_create(request):
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    request.session['register_form_data'] = POST
+    form = RegisterForm(POST)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Cadastro efeituado com sucesso.')
+
+        del(request.session['register_form_data'])
+
+    return redirect('main_app:register')
+
+
+def login(request):
+    if not request.POST:
+        raise Http404()
+    
     context = {
         'is_sign_page': True,
     }
-    return render(request=request, template_name='main/pages/sign.html', context=context)
 
+    return render(request=request, template_name='main/pages/login.html', context=context)

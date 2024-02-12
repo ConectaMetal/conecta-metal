@@ -20,7 +20,20 @@
     --color-gray-8: #323232;
     --color-gray-9: #191919;
 
-    --color-red-debug: #ff0000;
+    --color-dark-text: #444;
+    --color-info-light: #cce5ff;
+    --color-debug-light: #cce5ff;
+    --color-success-light: #d4edda;
+    --color-alert-light: #fff3cd;
+    --color-warning-light: #fff3cd;
+    --color-error-light: #f8d7da;
+  
+    --color-info-dark: #4d86c4;
+    --color-debug-dark: #4d86c4;
+    --color-success-dark: #4a9c5d;
+    --color-alert-dark: #927f40;
+    --color-warning-dark: #927f40;
+    --color-error-dark: #da525d;
 
     --spacing-gutter-extra-small: 1rem;
     --spacing-gutter-small: 2rem;
@@ -303,6 +316,12 @@ body {
     gap: var(--spacing-gutter-medium);
     padding: var(--spacing-gutter-small);
     background-color: rgba(224, 224, 224, .75);
+}
+
+@media (max-width: 600px) {
+    .main-products-list {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
 }
 
 /* PRODUCT-CARD.HTML */

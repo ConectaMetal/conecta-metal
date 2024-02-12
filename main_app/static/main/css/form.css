@@ -1,0 +1,106 @@
+.form-container {
+    margin: var(--spacing-gutter-large) auto;
+    border-radius: 10px;
+    border: .2rem solid #000;
+    max-width: 50rem;
+    display: flex;
+    flex-flow: column;
+    background-color: var(--color-gray-1);
+}
+
+.form-content {
+    margin: var(--spacing-gutter-extra-small) var(--spacing-gutter-small);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.form-content h2 {
+    text-align: center;
+    margin: var(--spacing-gutter-extra-small);
+}
+
+.form-content form {
+    width: 100%;
+}
+
+.form-fields {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.form-item {
+    width: 50%;
+    padding: var(--spacing-gutter-extra-small);
+    display: flex;
+    flex-flow: column nowrap;
+    transition: all 300ms ease-in-out;
+}
+
+.form-item:focus-within {
+    color: var(--color-primary);
+}
+
+.form-item label {
+    margin: 0 .5rem;
+}
+
+.form-item input,
+.form-item textarea,
+.form-item button {
+    padding: calc(var(--spacing-gutter-extra-small) / 2);
+    margin: calc(var(--spacing-gutter-extra-small) / 2) 0;
+    outline: none;
+    border-radius: 10px;
+    border: .1rem solid var(--color-black);
+    font-size: 18px;
+    transition: all 300ms ease-in-out;
+}
+
+.form-item input:focus,
+.form-item textarea:focus {
+    border-color: var(--color-primary);
+    color: #000;
+}
+
+#id_validatingDocument,
+#id_profilePic {
+    border: none;
+}
+
+.form-item button {
+    width: 100%;
+    color: var(--color-gray-1);
+    background-color: var(--color-black);
+}
+
+.form-item button:hover {
+    color: var(--color-primary);
+    background-color: var(--color-gray-9);
+}
+
+#id_description {
+    width: 100%;
+}
+
+.form-button {
+    width: 100%;
+    align-items: center;
+}
+
+.errorlist {
+    list-style: none;
+    color: var(--color-error-dark);
+    margin-left: .5rem;
+}
+
+.form-error {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .main-products-list {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
+}
