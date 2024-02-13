@@ -64,11 +64,6 @@
     color: #000;
 }
 
-#id_validatingDocument,
-#id_profilePic {
-    border: none;
-}
-
 .form-item button {
     width: 100%;
     color: var(--color-gray-1);
@@ -78,10 +73,6 @@
 .form-item button:hover {
     color: var(--color-primary);
     background-color: var(--color-gray-9);
-}
-
-#id_description {
-    width: 100%;
 }
 
 .form-button {

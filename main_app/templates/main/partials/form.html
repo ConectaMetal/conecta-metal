@@ -1,0 +1,18 @@
+<div class="form-fields">
+    {% for field in form %}
+        <div class="form-item" id="{{ field.id_for_label }}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+</div>
+
+{% if form.errors %}
+    <div class="form-item form-error">
+        <div class="message-error">
+            Por favor corrija os erros no formulário e envie novamente.
+        </div>
+    </div>
+{% endif %}

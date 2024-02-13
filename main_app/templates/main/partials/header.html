@@ -18,22 +18,34 @@
             <a href="" class="main-header-nav-button icon-button">
                 <i class="fa-solid fa-message"></i>
             </a>
-            <div class="profile-dropdown main-header-nav-button icon-button">
-                <button class="profile-dropbtn"><i class="fa-solid fa-user"></i></button>
-                <div class="profile-dropdown-content">
-                    {% comment %} {% if logado %} {% endcomment %}
-                        <p>Olá, "nome"</p>
-                        <div class="profile-dropdown-separator"></div>
-                        <a href="#">Perfil</a>
-                        <a href="#">Histórico</a>
-                        <div class="profile-dropdown-separator"></div>
-                        <a href="#">Sair</a>
-                    {% comment %} {% else %} {% endcomment %}
-                        <a href="{% url "main_app:login" %}">Logar</a>
-                        <a href="{% url "main_app:register" %}">Criar conta</a>
-                    {% comment %} {% endif %} {% endcomment %}
-                </div>
-              </div>
         {% endif %}
+        <div class="profile-dropdown main-header-nav-button icon-button">
+            <button class="profile-dropbtn"> 
+                {% if request.user.is_authenticated and request.user.picture %}
+                    <img src="{{ request.user.picture.url }}" alt="" class="user-picture">
+                {% else %}
+                    <i class="fa-solid fa-user"></i>
+                {% endif %}
+            </button>
+            <div class="profile-dropdown-content">
+                {% if request.user.is_authenticated %}
+                    <p>Olá, {{ request.user.username }}</p>
+                    <div class="profile-dropdown-separator"></div>
+                    <a href="#">Perfil</a>
+                    <a href="#">Histórico</a>
+                    <div class="profile-dropdown-separator"></div>
+                    <form action="{% url "main_app:logout" %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" value="{{ request.user.username }}">
+                        <button type="submit">Sair</button>
+                    </form>
+                    
+                {% else %}
+                    <a href="{% url "main_app:login" %}">Logar</a>
+                    <a href="{% url "main_app:register" %}">Criar conta</a>
+                {% endif %}
+            </div>
+            </div>
+
     </div>
 </header>

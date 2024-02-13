@@ -1,47 +1,10 @@
-import re
 import requests
 from django import forms
-from .models import Companies
+from ..models import Companies
 from django.core.exceptions import ValidationError
+from utils import form_utils as fu
 
 
-def strong_password(password):
-    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
-    if not regex.match(password):
-        raise ValidationError(
-            'Senha muito fraca',
-        )
-    
-def clear_text(text):
-    new_text = ''.join(e for e in text if e.isalnum() or e.isspace())
-    new_text = ' '.join(new_text.split())
-    return new_text
-
-def clear_data(data):
-    data = re.sub(r'[^a-zA-Z0-9]', ' ', data)
-    clear_data = ''.join(data.split())
-    return clear_data
-
-def valid_cnpj(cnpj):
-    clear_cnpj = clear_data(cnpj)
-    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])$')
-    if regex.match(clear_cnpj):
-        raise ValidationError('CNPJ inválido')
-    
-    regex = re.compile(r'^(?=.*[0-9]).{14,14}$')
-    if not regex.match(clear_cnpj):
-        raise ValidationError('CNPJ inválido')
-    
-def valid_cep(cep):
-    clear_cep = clear_data(cep)
-    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])$')
-    if regex.match(clear_cep):
-        raise ValidationError('CEP inválido')
-    
-    regex = re.compile(r'^(?=.*[0-9]).{8,8}$')
-    if not regex.match(clear_cep):
-        raise ValidationError('CEP inválido')
-    
 class RegisterForm(forms.ModelForm):
 
     repeatPassword = forms.CharField()
@@ -56,7 +19,7 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['CNPJ'].label = 'CNPJ'
-        self.fields['CNPJ'].validators = [valid_cnpj]
+        self.fields['CNPJ'].validators = [fu.valid_cnpj]
         self.fields['CNPJ'].widget.attrs['placeholder'] = 'CNPJ da empresa'
 
         self.fields['legalName'].label = 'Razão Social'
@@ -66,7 +29,7 @@ class RegisterForm(forms.ModelForm):
         self.fields['businessName'].widget.attrs['placeholder'] = 'Nome fantasia'
 
         self.fields['CEP'].label = 'CEP'
-        self.fields['CEP'].validators = [valid_cep]
+        self.fields['CEP'].validators = [fu.valid_cep]
         self.fields['CEP'].widget.attrs['placeholder'] = 'CEP da empresa'
 
         self.fields['addressNumber'].label = 'Endereço'
@@ -82,7 +45,7 @@ class RegisterForm(forms.ModelForm):
         self.fields['email'].widget.attrs['placeholder'] = 'E-mail para contato'
 
         self.fields['password'].label = 'Senha'
-        # self.fields['password'].validators = [strong_password]
+        # self.fields['password'].validators = [fu.strong_password]
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['placeholder'] = 'Sua senha'
 
@@ -95,18 +58,18 @@ class RegisterForm(forms.ModelForm):
 
         self.fields['profilePic'].label = 'Foto de Perfil'
         self.fields['profilePic'].error_messages = {'required': 'Esse campo é obrigatório.'}
-        # This line is for debugging
+        # The following line is for debugging
         self.fields['profilePic'].required = False
 
         self.fields['validatingDocument'].label = 'Documento Validador'
         self.fields['validatingDocument'].error_messages = {'required': 'Esse campo é obrigatório.'}
-        # This line is for debugging
+        # The following line is for debugging
         self.fields['validatingDocument'].required = False
 
 
     def clean_CNPJ(self):
         data = self.cleaned_data.get('CNPJ')
-        url = f"https://publica.cnpj.ws/cnpj/{clear_data(data)}"
+        url = f"https://publica.cnpj.ws/cnpj/{fu.clear_data(data)}"
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -118,11 +81,11 @@ class RegisterForm(forms.ModelForm):
         instance = super().save(commit=False)
         instance.registrationStatus = response.json()['estabelecimento']['situacao_cadastral']
 
-        return data
+        return fu.clear_data(data)
     
     def clean_CEP(self):
         data = self.cleaned_data.get('CEP')
-        url = f'https://viacep.com.br/ws/{clear_data(data)}/json/'
+        url = f'https://viacep.com.br/ws/{fu.clear_data(data)}/json/'
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -140,6 +103,17 @@ class RegisterForm(forms.ModelForm):
         instance.neigborhood = response.json()['bairro']
         instance.streetAddress = response.json()['logradouro']
             
+        return fu.clear_data(data)
+    
+    def clean_email(self):
+        data = self.cleaned_data.get('email')
+
+        if Companies.objects.filter(email=data).exists():
+            raise ValidationError(
+                'E-mail já cadastrado',
+                code='invalid'
+            )
+        
         return data
     
     def clean(self):
@@ -161,7 +135,7 @@ class RegisterForm(forms.ModelForm):
 
         # Create the slug for the company
         legal_name = self.cleaned_data.get('legalName')
-        instance.slug = clear_text(legal_name).replace(' ', '_').lower()
+        instance.slug = fu.clear_text(legal_name).replace(' ', '_').lower()
 
         instance = super().save(commit=True)
 

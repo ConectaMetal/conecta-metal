@@ -1,0 +1,8 @@
+#id_description {
+    width: 100%;
+}
+
+#id_validatingDocument,
+#id_profilePic {
+    border: none;
+}

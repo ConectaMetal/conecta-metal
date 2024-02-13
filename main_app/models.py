@@ -3,6 +3,35 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
+class Address(models.Model):
+    CEP = models.CharField(max_length=9)
+    state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    neigborhood = models.CharField(max_length=255)
+    streetAddress = models.CharField(max_length=255)
+    number = models.CharField(max_length=255)
+    complement = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.CEP
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    CPF = models.CharField(max_length=14, unique=True)
+    picture = models.ImageField(upload_to='main/user/picture/%Y/%m/%d/', null=True, blank=True, default=None)
+    aboutMe = models.TextField(null=True, blank=True, default=None)
+    address = models.ForeignKey(
+        Address, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.CPF
+    
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+
+
 class Companies(models.Model):
     CNPJ = models.CharField(max_length=50)
     legalName = models.CharField(max_length=255)
@@ -24,6 +53,10 @@ class Companies(models.Model):
     validatingDocument = models.FileField()
     isPartner = models.BooleanField(default=False)
     isValid = models.BooleanField(default=False)
+
+    REQUIRED_FIELDS = ['CNPJ', 'password']
+
+    USERNAME_FIELD = 'CNPJ'
 
     def __str__(self):
         return self.legalName
