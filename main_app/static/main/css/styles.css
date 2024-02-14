@@ -363,12 +363,20 @@ body {
     color: var(--color-black);
 }
 
-.card-cover img {
-    width: 100%;
-    max-height: auto;
-    border-radius: 10px 10px 0 0;
+.card-cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-bottom: .1rem solid var(--color-black);
+}
+
+.card-cover img {
+    width: 90%;
+    max-height: auto;
+    border-radius: 10px;
+    border: .1rem solid var(--color-black);
     object-fit: cover;
+    margin: var(--spacing-gutter-extra-small);
 }
 
 .card-title {
@@ -381,6 +389,7 @@ body {
 
 .card-details {
     padding: .5rem;
+    height: 3.5rem;
 }
 
 .card-info {
@@ -398,6 +407,8 @@ body {
 
 .card-owner {
     width: 50%;
+    display: flex;
+    justify-content: center;
 }
 
 .card-owner a {
@@ -418,6 +429,7 @@ body {
     border-radius: 100%;
     margin-right: .5rem;
     background-color: rgba(0, 0, 0, .15);
+    border: .1rem solid rgba(0, 0, 0, .2);
 }
 
 .card-button {
@@ -432,7 +444,7 @@ body {
     background-color: var(--color-black);
     color: var(--color-gray-0);
     padding: 1rem;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -666,7 +678,8 @@ body {
     border-bottom: .15rem solid #000;
 }
 
-.company-products-list {
+.company-products-list,
+.company-services-list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40px, 80px));
@@ -716,42 +729,4 @@ body {
 .company-social i {
     font-size: 1.5rem;
     height: 1.5rem;
-}
-
-/* PAGINATION.HTML */
-
-.pagination-container {
-    width: 100%;
-}
-
-.pagination-content {
-    margin: 0 auto;
-    width: fit-content;
-    display: flex;
-    flex-flow: row nowrap;
-    background-color: rgba(224, 224, 224, .75);
-    padding: calc(var(--spacing-gutter-extra-small) / 2);
-    border-radius: 0 0 10px 10px;
-}
-
-.pagination-link {
-    width: 2rem;
-    height: 2rem;
-    font-size: 19px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 .25rem;
-    text-decoration: none;
-    color: var(--color-black);
-}
-
-.pagination-link:hover {
-    background-color: rgba(0, 0, 0, .15);
-}
-
-.pagination-current {
-    color: var(--color-primary);
-    text-decoration: underline;
 }

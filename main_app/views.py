@@ -4,10 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from main_app.models import Products, Companies, SocialMedia
+from django.contrib.auth.models import User
+from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, BuyCart
 from utils.pagination import make_pagination
-from .forms import RegisterForm, LoginForm, SignUpForm
-from utils import form_utils as fu
+from .forms import LoginForm, SignUpForm
 
 import os
 
@@ -31,9 +31,14 @@ def home(request):
         ).order_by('-id')
         additional_query_string = f'&q={search_term}'
 
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
     page_object, pagination_range = make_pagination(request, products, PER_PAGE)
 
     context = {
+        'user_profile': user_profile,
         'products': page_object, 
         'show_products': True,
         'search_term': search_term,
@@ -53,6 +58,35 @@ def product(request, slug):
     return render(request=request, template_name='main/pages/product.html', context=context)
 
 
+def service(request):
+
+    search_term = request.GET.get('q', '').strip()
+
+    if not search_term:
+        services = Services.objects.filter(
+            company__isPartner=True
+        ).order_by('-id')
+        additional_query_string = ''
+    else:
+        services = Services.objects.filter(
+            Q(name__icontains=search_term) |
+            Q(details__icontains=search_term),
+            company__isPartner=True,
+        ).order_by('-id')
+        additional_query_string = f'&q={search_term}'
+
+    page_object, pagination_range = make_pagination(request, services, PER_PAGE)
+
+    context = {
+        'services': page_object, 
+        'search_term': search_term,
+        'pagination_range': pagination_range,
+        'additional_url_query': additional_query_string
+    }
+
+    return render(request=request, template_name='main/pages/services.html', context=context)
+
+
 def company(request, slug):
     company = get_object_or_404(
         Companies, slug=slug
@@ -62,11 +96,19 @@ def company(request, slug):
         company__id=company.id
     ).order_by('-id')
 
+    services = Services.objects.filter(
+        company__id=company.id
+    ).order_by('-id')
+
     social_medias = SocialMedia.objects.filter(
         company__id=company.id
     ).order_by('-id')
 
-    context = {'company': company, 'products': products, 'social_medias': social_medias}
+    context = {
+        'company': company, 
+        'products': products, 
+        'services': services,
+        'social_medias': social_medias}
 
     return render(request=request, template_name='main/pages/company.html', context=context)
 
@@ -141,3 +183,21 @@ def logout_view(request):
         logout(request)
     
     return redirect('main_app:login')
+
+
+def profile(request, slug):
+    ...
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def shopping_cart(request):
+    
+    cart_products = BuyCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    context = {
+        'cart_products': cart_products
+    }
+
+    return render(request=request, template_name='main/pages/cart.html', context=context)

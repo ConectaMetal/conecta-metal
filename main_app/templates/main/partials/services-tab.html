@@ -1,0 +1,10 @@
+<div class="main-services-container">
+    <div class="main-services-list">
+        {% for service in services %}
+            {% include "main/partials/services-card.html" %}
+        {% endfor %}
+    </div>
+    {% if services.has_other_pages %}
+        {% include "main/partials/pagination.html" %}
+    {% endif %}
+</div>

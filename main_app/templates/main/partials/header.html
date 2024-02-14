@@ -4,10 +4,13 @@
     <div class="main-header-left">
         <img src="{% static 'main/img/cm-square-logo.png' %}" alt="CM" class="main-header-logo">
         <a href="{% url "main_app:home" %}" class="main-header-nav-button">
-            <p>Início</p>
+            <p>Produtos</p>
+        </a>
+        <a href="{% url "main_app:services" %}" class="main-header-nav-button">
+            <p>Serviços</p>
         </a>
         <a href="" class="main-header-nav-button">
-            <p>Postagens</p>
+            <p>Pedidos</p>
         </a>
     </div>
     <div class="main-header-right">
@@ -29,11 +32,19 @@
             </button>
             <div class="profile-dropdown-content">
                 {% if request.user.is_authenticated %}
+
                     <p>Olá, {{ request.user.username }}</p>
+
                     <div class="profile-dropdown-separator"></div>
+
                     <a href="#">Perfil</a>
+                    {% if user_profile.serviceTer != 'Nenhum' %}
+                        <a href="#">Painel</a>
+                    {% endif %}
                     <a href="#">Histórico</a>
+
                     <div class="profile-dropdown-separator"></div>
+
                     <form action="{% url "main_app:logout" %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="username" value="{{ request.user.username }}">
@@ -41,8 +52,10 @@
                     </form>
                     
                 {% else %}
+
                     <a href="{% url "main_app:login" %}">Logar</a>
                     <a href="{% url "main_app:register" %}">Criar conta</a>
+
                 {% endif %}
             </div>
             </div>

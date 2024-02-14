@@ -4,11 +4,13 @@
 
 {% block static %}
     <link rel="stylesheet" href="{% static 'main/css/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/services-tab.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/services-card.css' %}">
 {% endblock static %}
 
-{% block title %}Início{% endblock title %}
+{% block title %}Serviços{% endblock title %}
 
 {% block content %}
     {% include "main/partials/search.html" %}
-    {% include "main/partials/products-tab.html" %}
+    {% include "main/partials/services-tab.html" %}
 {% endblock content %}

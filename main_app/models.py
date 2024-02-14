@@ -17,10 +17,20 @@ class Address(models.Model):
 
 
 class UserProfile(models.Model):
+    class ServiceTierName(models.TextChoices):
+        Nenhum = 'Nenhum', _('Nenhum')
+        Bronze = 'Bronze', _('Bronze')
+        Silver = 'Silver', _('Silver')
+        Gold = 'Gold', _('Gold')
+        Platinum = 'Platinum', _('Platinum')
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     CPF = models.CharField(max_length=14, unique=True)
     picture = models.ImageField(upload_to='main/user/picture/%Y/%m/%d/', null=True, blank=True, default=None)
     aboutMe = models.TextField(null=True, blank=True, default=None)
+    serviceTer = models.CharField(
+        max_length=8, choices=ServiceTierName.choices, default=ServiceTierName.Nenhum
+    )
     address = models.ForeignKey(
         Address, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -36,30 +46,22 @@ class Companies(models.Model):
     CNPJ = models.CharField(max_length=50)
     legalName = models.CharField(max_length=255)
     businessName = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     profilePic = models.ImageField(upload_to='main/prof_pics/%Y/%m/%d/')
     description = models.TextField(null=True, blank=True, default=None)
-    registrationStatus = models.CharField(max_length=100)
-    CEP = models.CharField(max_length=10)
-    state = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    neigborhood = models.CharField(max_length=255)
-    streetAddress = models.CharField(max_length=255)
-    addressNumber = models.CharField(max_length=255)
-    complement = models.CharField(max_length=100, blank=True)
-    phoneNumber = models.CharField(max_length=20, blank=True)
-    email = models.EmailField(max_length=255)
-    validatingDocument = models.FileField()
+    owner = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
+    address = models.ForeignKey(
+        Address, on_delete=models.SET_NULL, null=True, blank=True
+    )
     isPartner = models.BooleanField(default=False)
-    isValid = models.BooleanField(default=False)
-
-    REQUIRED_FIELDS = ['CNPJ', 'password']
-
-    USERNAME_FIELD = 'CNPJ'
 
     def __str__(self):
         return self.legalName
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 
 class SocialMedia(models.Model):
@@ -96,7 +98,7 @@ class Products(models.Model):
     secondPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
     thirdPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
     fourthPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
-    details = models.CharField(max_length=255)
+    details = models.CharField(max_length=100)
     description = models.TextField()
     value = models.DecimalField(max_digits=20, decimal_places=2)
     stock = models.DecimalField(max_digits=20, decimal_places=2)
@@ -127,16 +129,19 @@ class Services(models.Model):
 
 
 class BuyCart(models.Model):
-    customer = models.ForeignKey(
-        Companies, on_delete=models.SET_NULL, null=True, blank=True
+    client = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
     )
     product = models.ForeignKey(
-        Products, on_delete=models.SET_NULL, null=True, blank=True
+        Products, on_delete=models.CASCADE, null=True, blank=True
     )
     amount = models.DecimalField(max_digits=20, decimal_places=5)
 
     def __str__(self):
         return self.product
+    
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 
 class Invoice(models.Model):
