@@ -5,15 +5,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
-from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, BuyCart
+from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart
 from utils.pagination import make_pagination
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, AddToCartForm
 
 import os
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 30))
 
 # Create your views here.
+@login_required(login_url='main_app:login', redirect_field_name='next')
 def home(request):
 
     search_term = request.GET.get('q', '').strip()
@@ -31,11 +32,33 @@ def home(request):
         ).order_by('-id')
         additional_query_string = f'&q={search_term}'
 
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST)
+        if form.is_valid():
+            existing_item = ShoppingCart.objects.filter(
+                client=form.cleaned_data['client'],
+                product=form.cleaned_data['product']
+            ).exists()
+            if not existing_item:
+                form.save()
+    else:
+        form = AddToCartForm()
+
     user_profile = UserProfile.objects.filter(
         user=request.user
     ).first()
 
+    form = AddToCartForm()
+
     page_object, pagination_range = make_pagination(request, products, PER_PAGE)
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
 
     context = {
         'user_profile': user_profile,
@@ -43,21 +66,55 @@ def home(request):
         'show_products': True,
         'search_term': search_term,
         'pagination_range': pagination_range,
-        'additional_url_query': additional_query_string
+        'additional_url_query': additional_query_string,
+        'form': form,
+        'products_amount': products_amount,
     }
 
     return render(request=request, template_name='main/pages/home.html', context=context)
 
 
+@login_required(login_url='main_app:login', redirect_field_name='next')
 def product(request, slug):
     product = get_object_or_404(
         Products, slug=slug
     )
-    context = {'product': product}
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST)
+        if form.is_valid():
+            existing_item = ShoppingCart.objects.filter(
+                client=form.cleaned_data['client'],
+                product=form.cleaned_data['product']
+            ).exists()
+            if not existing_item:
+                form.save()
+    else:
+        form = AddToCartForm()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'product': product,
+        'products_amount': products_amount,
+        'form': form,
+        'user_profile': user_profile,
+        }
 
     return render(request=request, template_name='main/pages/product.html', context=context)
 
 
+@login_required(login_url='main_app:login', redirect_field_name='next')
 def service(request):
 
     search_term = request.GET.get('q', '').strip()
@@ -77,16 +134,26 @@ def service(request):
 
     page_object, pagination_range = make_pagination(request, services, PER_PAGE)
 
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
     context = {
         'services': page_object, 
         'search_term': search_term,
         'pagination_range': pagination_range,
-        'additional_url_query': additional_query_string
+        'additional_url_query': additional_query_string,
+        'products_amount': products_amount,
     }
 
     return render(request=request, template_name='main/pages/services.html', context=context)
 
 
+@login_required(login_url='main_app:login', redirect_field_name='next')
 def company(request, slug):
     company = get_object_or_404(
         Companies, slug=slug
@@ -104,11 +171,21 @@ def company(request, slug):
         company__id=company.id
     ).order_by('-id')
 
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
     context = {
         'company': company, 
         'products': products, 
         'services': services,
-        'social_medias': social_medias}
+        'social_medias': social_medias,
+        'products_amount': products_amount,
+    }
 
     return render(request=request, template_name='main/pages/company.html', context=context)
 
@@ -192,12 +269,67 @@ def profile(request, slug):
 @login_required(login_url='main_app:login', redirect_field_name='next')
 def shopping_cart(request):
     
-    cart_products = BuyCart.objects.filter(
+    cart_products = ShoppingCart.objects.filter(
         client__user = request.user
     ).order_by('-id')
 
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    products_value = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+        products_value += cart_product.finalPrice
+
+    products_freight = 19.99
+
+    products_final_value = float(products_value) + float(products_freight)
+
     context = {
-        'cart_products': cart_products
+        'cart_products': cart_products,
+        'products_amount': products_amount,
+        'products_value': products_value,
+        'products_freight': products_freight,
+        'products_final_value': products_final_value,
+        'user_profile': user_profile,
     }
 
     return render(request=request, template_name='main/pages/cart.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def shopping_delete(request):
+    if request.method == 'POST':
+        cart_item_id = request.POST.get('cart_item_id')
+        existing_item = ShoppingCart.objects.filter(
+            id=cart_item_id,
+        ).first()
+        if existing_item:
+            existing_item.delete()
+    else:
+        raise Http404()
+
+    return redirect('main_app:shopping')
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def shopping_edit(request):
+    if request.method == 'POST':
+        cart_item_id = request.POST.get('cart_item_id')
+        existing_item = ShoppingCart.objects.filter(
+            id=cart_item_id,
+        ).first()
+        if existing_item:
+            if request.POST.get('type') == 'raise':
+                existing_item.amount += 1
+                existing_item.save()
+            if request.POST.get('type') == 'decrease':
+                if existing_item.amount != 1:
+                    existing_item.amount -= 1
+                existing_item.save()
+    else:
+        raise Http404()
+
+    return redirect('main_app:shopping')

@@ -13,7 +13,7 @@ class SignUpForm(forms.Form):
         label='Nome',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ex.: Vitor'
+                'placeholder': 'Ex.: Vitor Barbosa'
             }
         )
     )
@@ -21,7 +21,7 @@ class SignUpForm(forms.Form):
         label='Sobrenome',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ex.: Barbosa Nogueira'
+                'placeholder': 'Ex.: Nogueira'
             }
         )
     )

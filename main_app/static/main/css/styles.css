@@ -106,6 +106,40 @@ body {
     margin: 0 var(--spacing-gutter-extra-small);
 }
 
+.main-header-cart {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    border: .1rem solid var(--color-gray-1);
+    border-radius: 5px;
+    width: fit-content;
+    height: 2rem;
+    margin: 0 16px;
+}
+
+.main-header-cart-button {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-gray-1)
+}
+
+.main-header-cart-button:hover i,
+.main-header-cart-button:hover p {
+    color: var(--color-primary);
+}
+
+.main-header-cart-button i {
+    width: 30px;
+    margin-right: 5px;
+}
+
+.main-header-cart-button p {
+    padding-left: 10px;
+}
+
 .icon-button {
     width: 50px;
 }
@@ -113,6 +147,8 @@ body {
 .icon-button:focus button {
     color: var(--color-primary);
 }
+
+
 
 .profile-dropdown {
     position: relative;

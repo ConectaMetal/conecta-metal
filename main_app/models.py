@@ -128,17 +128,22 @@ class Services(models.Model):
         return self.name
 
 
-class BuyCart(models.Model):
+class ShoppingCart(models.Model):
     client = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, null=True, blank=True
     )
     product = models.ForeignKey(
         Products, on_delete=models.CASCADE, null=True, blank=True
     )
-    amount = models.DecimalField(max_digits=20, decimal_places=5)
+    amount = models.IntegerField(default=1)
+    finalPrice = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self):
-        return self.product
+        return self.product.name
+    
+    def save(self, *args, **kwargs):
+        self.finalPrice = self.amount * self.product.value
+        super(ShoppingCart, self).save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)

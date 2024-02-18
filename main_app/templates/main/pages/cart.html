@@ -3,11 +3,44 @@
 {% load static %}
 
 {% block static %}
-    
+    <link rel="stylesheet" href="{% static 'main/css/cart.css' %}">
 {% endblock static %}
 
 {% block title %}Carrinho{% endblock title %}
 
 {% block content %}
-    Carrinho
+    <div class="cart-container">
+        <div class="cart-list">
+            <div class="cart-list-header">
+                <h2 class="cart-header-product">Produto</h2>
+                <h2 class="cart-header-amount">Quantidade</h2>
+                <h2 class="cart-header-price">Preço Final</h2>
+                <h2 class="cart-header-delete"> - </h2>
+            </div>
+            <div class="cart-list-items">
+                {% for cart_product in cart_products %}
+                    {% include "main/partials/cart-card.html" %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="cart-summary">
+            <div class="cart-summary-info">
+                <div class="cart-summary-title">
+                    <h2>RESUMO DO PEDIDO</h2>
+                </div>
+                <div class="cart-summary-data">
+                    <div class="cart-summary-separator"></div>
+                    <p>Quantidade de Produtos: {{ products_amount }}</p>
+                    <p>Valor dos Produtos: R$ {{ products_value }}</p>
+                    <div class="cart-summary-separator"></div>
+                    <p>Frete: R$ {{ products_freight }}</p>
+                    <p>Valor Total: R$ {{ products_final_value }}</p>
+                    <div class="cart-summary-separator"></div>
+                </div>
+                <div class="cart-summary-next">
+                    <button type="submit" class="cart-summary-submit"><h2>Continuar</h2></button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

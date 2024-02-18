@@ -1,0 +1,38 @@
+<div class="cart-card-container">
+    <div class="cart-card-product">
+        <a href="{% url "main_app:product" cart_product.product.slug %}">
+            <div class="cart-card-cover">
+                <img src="{{ cart_product.product.mainPicture.url }}" alt="">
+            </div>
+            <div class="cart-card-title">
+                <h2>{{ cart_product.product.name }}</h2>
+            </div>
+        </a>
+    </div>
+    <div class="cart-card-amount">
+        <form action="{% url "main_app:shopping_edit" %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="cart_item_id" value="{{ cart_product.id }}">
+            <input type="hidden" name="type" value="decrease">
+            <button class="cart-amount-less cart-amount-button"><i class="fa-solid fa-angle-left"></i></button>
+        </form>
+        <p class="cart-amount-button">{{ cart_product.amount }}</p>
+        <form action="{% url "main_app:shopping_edit" %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="cart_item_id" value="{{ cart_product.id }}">
+            <input type="hidden" name="type" value="raise">
+            <button class="cart-amount-plus cart-amount-button"><i class="fa-solid fa-angle-right"></i></button>
+        </form>
+    </div>
+    <div class="cart-card-price">
+        <p>R$ {{ cart_product.finalPrice }}</p>
+    </div>
+    <div class="cart-card-delete">
+        <form action="{% url "main_app:shopping_delete" %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="cart_item_id" value="{{ cart_product.id }}">
+            <button class="cart-amount-button"><i class="fa-solid fa-xmark"></i></button>
+        </form>
+        
+    </div>
+</div>

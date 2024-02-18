@@ -10,6 +10,8 @@ urlpatterns = [
     path('service/<slug:slug>/', views.service, name="services"),
     path('company/<slug:slug>/', views.company, name="company"),
     path('shopping/', views.shopping_cart, name="shopping"),
+    path('shopping/delete', views.shopping_delete, name="shopping_delete"),
+    path('shopping/edit', views.shopping_edit, name="shopping_edit"),
     # Register / Login / Logout paths
     path('register/', views.register_view, name="register"),
     path('register/create/', views.register_create, name="create"),

@@ -15,9 +15,12 @@
     </div>
     <div class="main-header-right">
         {% if not is_sign_page %}
-            <a href="" class="main-header-nav-button icon-button">
-                <i class="fa-solid fa-cart-shopping"></i>
-            </a>
+            <div class="main-header-cart">
+                <a href="{% url "main_app:shopping" %}" class="main-header-cart-button">
+                    <p>{{ products_amount }}</p>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            </div>
             <a href="" class="main-header-nav-button icon-button">
                 <i class="fa-solid fa-message"></i>
             </a>

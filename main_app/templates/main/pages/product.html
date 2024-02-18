@@ -55,7 +55,14 @@
         </div>
 
         <div class="product-button">
-            <button><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
+            <form action="{% url "main_app:product" product.slug %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="client" value="{{ user_profile.id }}">
+                <input type="hidden" name="product" value="{{ product.id }}">
+                <input type="hidden" name="amount" value=1>
+                <input type="hidden" name="finalPrice" value={{ 0 }}>
+                <button type="submit"><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
+            </form>
         </div>
     </div>
 {% endblock content %}
