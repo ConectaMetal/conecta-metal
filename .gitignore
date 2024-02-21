@@ -3,7 +3,8 @@
 *.pot
 *.pyc
 __pycache__
-db.sqlite3
+
+# db.sqlite3
 # media
 
 # Backup files #
@@ -76,13 +77,14 @@ celerybeat-schedule.*
 *.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+
+# .env
+# .venv
+# env/
+# venv/
+# ENV/
+# env.bak/
+# venv.bak/
 
 # mkdocs documentation
 /site

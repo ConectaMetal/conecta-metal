@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
-from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart, Employee
+from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart, Employee, Requests
 from utils.pagination import make_pagination
 from .forms import LoginForm, SignUpForm, AddToCartForm
 
@@ -191,13 +191,26 @@ def requests(request):
         user=request.user
     ).first()
 
+    user_requests = Requests.objects.filter(
+        owner=user_profile
+    ).order_by('-id')
+
+    if user_profile.serviceTer != 'Nenhum':
+        others_requests = Requests.objects.filter(
+            ~Q(owner=user_profile)
+        ).order_by('-id')
+    else:
+        others_requests = None
+
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
     context = {
+        'others_requests': others_requests,
         'products_amount': products_amount,
         'user_profile': user_profile,
+        'user_requests': user_requests,
     }
 
     return render(request=request, template_name='main/pages/requests.html', context=context)

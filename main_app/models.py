@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from utils import models_utils as mu
 
 # Create your models here.
 class Address(models.Model):
@@ -26,7 +27,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     CPF = models.CharField(max_length=14, unique=True)
-    picture = models.ImageField(upload_to='main/user/picture/%Y/%m/%d/', null=True, blank=True, default=None)
+    picture = models.ImageField(upload_to=mu.profile_image_upload, null=True, blank=True, default=None)
     aboutMe = models.TextField(null=True, blank=True, default=None)
     phone = models.CharField(max_length=255, null=True, blank=True, default=None)
     serviceTer = models.CharField(
@@ -48,7 +49,7 @@ class Companies(models.Model):
     legalName = models.CharField(max_length=255)
     businessName = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    profilePic = models.ImageField(upload_to='main/prof_pics/%Y/%m/%d/')
+    profilePic = models.ImageField(upload_to=mu.company_image_upload)
     description = models.TextField(null=True, blank=True, default=None)
     owner = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, null=True, blank=True
@@ -112,10 +113,10 @@ class SocialMedia(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    mainPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/')
-    secondPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
-    thirdPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
-    fourthPicture = models.ImageField(upload_to='main/products/%Y/%m/%d/', null=True, blank=True)
+    mainPicture = models.ImageField(upload_to=mu.product_image_upload)
+    secondPicture = models.ImageField(upload_to=mu.product_image_upload, null=True, blank=True)
+    thirdPicture = models.ImageField(upload_to=mu.product_image_upload, null=True, blank=True)
+    fourthPicture = models.ImageField(upload_to=mu.product_image_upload, null=True, blank=True)
     details = models.CharField(max_length=100)
     description = models.TextField()
     value = models.DecimalField(max_digits=20, decimal_places=2)
@@ -132,9 +133,9 @@ class Products(models.Model):
 class Services(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    mainPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/')
-    secondPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/', null=True, blank=True)
-    thirdPicture = models.ImageField(upload_to='main/services/%Y/%m/%d/', null=True, blank=True)
+    mainPicture = models.ImageField(upload_to=mu.service_image_upload)
+    secondPicture = models.ImageField(upload_to=mu.service_image_upload, null=True, blank=True)
+    thirdPicture = models.ImageField(upload_to=mu.service_image_upload, null=True, blank=True)
     details = models.CharField(max_length=255)
     description = models.TextField()
     rating = models.FloatField()
@@ -144,6 +145,29 @@ class Services(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Requests(models.Model):
+    class RequestTypeName(models.TextChoices):
+        Produto = 'Produto', _('Produto')
+        Serviço = 'Serviço', _('Serviço')
+
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    picture = models.ImageField(upload_to=mu.request_image_upload, null=True, blank=True)
+    type = models.CharField(
+        max_length=7, choices=RequestTypeName.choices, default=RequestTypeName.Serviço
+    )
+    maxBudget = models.DecimalField(max_digits=20, decimal_places=2)
+    owner = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.name
+    
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 
 class ShoppingCart(models.Model):

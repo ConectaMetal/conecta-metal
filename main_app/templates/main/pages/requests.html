@@ -3,11 +3,24 @@
 {% load static %}
 
 {% block static %}
+    <link rel="stylesheet" href="{% static 'main/css/requests.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/pagination.css' %}">
 {% endblock static %}
 
 {% block title %}Pedidos{% endblock title %}
 
 {% block content %}
+    <div class="requests-owner">
+        <div class="requests-owner-title">
+            <h1>Seus Pedidos</h1>
+        </div>
+        <div class="requests-owner-list">
+            {% for request in user_requests %}
+                {% include "main/partials/requests-card.html" %}
+                {% include "main/partials/requests-card.html" %}
+                {% include "main/partials/requests-card.html" %}
+            {% endfor %}
+        </div>
+    </div>
     {% include "main/partials/search.html" %}
 {% endblock content %}
