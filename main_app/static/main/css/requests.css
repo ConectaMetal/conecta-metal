@@ -22,6 +22,8 @@
 
 .requests-card {
     width: 100%;
+    display: flex;
+    flex-flow: row nowrap
 }
 
 .requests-card-content {
@@ -43,13 +45,34 @@
 }
 
 .request-card-info {
-    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     margin: calc(var(--spacing-gutter-extra-small) / 2);
+    justify-content: space-between;
 }
 
-.requests-owner-list img {
+.request-card-budget,
+.request-card-type,
+.request-card-owner {
     width: 30%;
-    height: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: end;
+}
+
+.request-card-type {
+    width: 30%;
+}
+
+.request-card-owner {
+    width: 30%;
+}
+
+.request-card-owner img {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin-right: .5rem;
+    background-color: rgba(0, 0, 0, .15);
+    border: .1rem solid rgba(0, 0, 0, .2);
 }
