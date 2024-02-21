@@ -9,12 +9,12 @@
         <a href="{% url "main_app:services" %}" class="main-header-nav-button">
             <p>Serviços</p>
         </a>
-        <a href="" class="main-header-nav-button">
+        <a href="{% url "main_app:requests" %}" class="main-header-nav-button">
             <p>Pedidos</p>
         </a>
     </div>
     <div class="main-header-right">
-        {% if not is_sign_page %}
+        {% if request.user.is_authenticated %}
             <div class="main-header-cart">
                 <a href="{% url "main_app:shopping" %}" class="main-header-cart-button">
                     <p>{{ products_amount }}</p>
@@ -27,8 +27,10 @@
         {% endif %}
         <div class="profile-dropdown main-header-nav-button icon-button">
             <button class="profile-dropbtn"> 
-                {% if request.user.is_authenticated and request.user.picture %}
-                    <img src="{{ request.user.picture.url }}" alt="" class="user-picture">
+                {% if request.user.is_authenticated and user_profile.picture %}
+                    <img src="{{ user_profile.picture.url }}" alt="" class="user-picture">
+                {% elif request.user.is_authenticated %}
+                    <img src="{% static "main/img/no_profile_picture.png" %}" alt="" class="user-picture">
                 {% else %}
                     <i class="fa-solid fa-user"></i>
                 {% endif %}
@@ -40,11 +42,11 @@
 
                     <div class="profile-dropdown-separator"></div>
 
-                    <a href="#">Perfil</a>
+                    <a href="{% url "main_app:profile" user_profile.user.username %}">Perfil</a>
                     {% if user_profile.serviceTer != 'Nenhum' %}
-                        <a href="#">Painel</a>
+                        <a href="{% url "main_app:dashboard" %}">Painel</a>
                     {% endif %}
-                    <a href="#">Histórico</a>
+                    <a href="{% url "main_app:historic" %}">Histórico</a>
 
                     <div class="profile-dropdown-separator"></div>
 

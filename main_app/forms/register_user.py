@@ -62,6 +62,7 @@ class SignUpForm(forms.Form):
     # Models UserProfile fields
     CPF = forms.CharField(
         label='CPF',
+        validators = [fu.valid_cpf],
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Insira seu CPF'

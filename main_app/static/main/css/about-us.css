@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #e0e0e0;
+    font-family: helvetica, sans-serif;
+}
+
+.main-header-container {
+    background-color: var(--color-black);
+}
+
+.about-image {
+    width: 100vw;
+    height: auto;
+}
+
+.about-content {
+    color: #000000;
+    margin: calc(var(--spacing-gutter-large) * 2);
+    justify-content: space-between;
+}
+
+.about-content p {
+    font-size: 24px;
+    padding-bottom: var(--spacing-gutter-small);
+}

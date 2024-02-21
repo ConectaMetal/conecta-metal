@@ -19,23 +19,27 @@
             <p>{{ company.description }}</p>
         </div>
 
-        <div class="company-products">
-            <h2>Produtos</h2>
-            <div class="company-products-list">
-                {% for product in products %}
-                    {% include "main/partials/company-products.html" %}
-                {% endfor %}
+        {% if products %}
+            <div class="company-products">
+                <h2>Produtos</h2>
+                <div class="company-products-list">
+                    {% for product in products %}
+                        {% include "main/partials/company-products.html" %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
 
-        <div class="company-services">
-            <h2>Serviços</h2>
-            <div class="company-services-list">
-                {% for service in services %}
-                    {% include "main/partials/company-service.html" %}
-                {% endfor %}
+        {% if services %}
+            <div class="company-services">
+                <h2>Serviços</h2>
+                <div class="company-services-list">
+                    {% for service in services %}
+                        {% include "main/partials/company-service.html" %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
 
         <div class="company-contact">
             <div class="company-email"><i class="fa-solid fa-envelope"></i> {{ company.email }}</div>

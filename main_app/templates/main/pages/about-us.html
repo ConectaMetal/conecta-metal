@@ -1,0 +1,26 @@
+{% extends "main/base/base.html" %}
+
+{% load static %}
+
+{% block static %}
+    <link rel="stylesheet" href="{% static 'main/css/about-us.css' %}">
+{% endblock static %}
+
+{% block title %}Sobre nós{% endblock title %}
+
+{% block content %}
+<img src="{% static "main/img/aboutImage.png" %}" class="about-image">
+
+
+<div class="about-content">    
+    <p>
+        O conecta metal é uma inovadora plataforma concebida para simplificar o processo de aquisição de produtos na área de metalurgia. Diante da carência de um portal abrangente que congregasse diversas empresas do setor, reconhecemos a necessidade de preencher essa lacuna. Assim, decidimos criar o Conecta Metal, um projeto concebido por um grupo de seis estudantes do Entra21.
+    </p>
+    <p>
+        Nosso objetivo é fornecer uma solução abrangente, reunindo empresas metalúrgicas e facilitando o acesso direto a seus produtos e serviços personalizados. Comprometemo-nos com a excelência, buscando incessantemente oferecer aos nossos clientes as melhores opções disponíveis no mercado. Nossa plataforma foi desenvolvida para atender às necessidades específicas de planejamento e aquisição de serviços exclusivos na área da metalurgia.
+    </p>
+    <p>
+        Garantimos aos nossos clientes a facilidade na aquisição de produtos de alta qualidade, superando constantemente suas expectativas. Mais do que meramente comercializar, almejamos estabelecer parcerias sólidas entre clientes e empresas, fortalecendo assim o setor metalúrgico. Convidamos você a fazer parte dessa jornada conosco, onde nosso compromisso é conectar você ao que há de melhor no universo da metalurgia.
+    </p>
+    </div>
+{% endblock content %}

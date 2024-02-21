@@ -1,0 +1,195 @@
+.profile-container {
+    margin: var(--spacing-gutter-large) auto;
+    margin-bottom: var(--spacing-gutter-extra-small);
+    border-radius: 10px;
+    border: .2rem solid #000;
+    max-width: 64rem;
+    display: flex;
+    flex-flow: column;
+    background-color: var(--color-gray-1);
+}
+
+.profile-repeat {
+    margin: var(--spacing-gutter-extra-small) auto;
+}
+
+.profile-identification {
+    margin: var(--spacing-gutter-small);
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.profile-picture {
+    width: 30%;
+    height: fit-content;
+    background-color: rgba(0, 0, 0, .15);
+    border: .2rem solid var(--color-gray-9);
+    border-radius: 100%;
+    margin: var(--spacing-gutter-extra-small);
+    margin-right: calc(var(--spacing-gutter-extra-small) + var(--spacing-gutter-small));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.Bronze { 
+    border-color: #CD7F32; 
+}
+.Silver { 
+    border-color: #C0C0C0; 
+}
+.Gold { 
+    border-color: #FFD700; 
+}
+.Platinum { 
+    border-color: #00bfff; 
+}
+
+.profile-info {
+    width: 50%;
+    padding-left: var(--spacing-gutter-extra-small);
+    border-left: .15rem solid var(--color-black);
+}
+
+.profile-names {
+    width: 100%;
+}
+
+.profile-name {
+    width: 100%;
+    padding-top: var(--spacing-gutter-small);
+}
+
+.profile-username {
+    padding-bottom: var(--spacing-gutter-medium);
+}
+
+.profile-email {
+    width: 100%;
+    margin-bottom: var(--spacing-gutter-extra-small);
+}
+
+.profile-phone {
+    width: 100%;
+}
+
+.profile-companies a{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.profile-buttons {
+    width: 20%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: end;
+}
+
+.profile-share {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: calc(var(--spacing-gutter-extra-small) / 2);
+    background-color: var(--color-info-light);
+    border: .15rem solid var(--color-info-dark);
+    color: var(--color-info-dark);
+    transition: all 250ms ease-in-out;
+}
+
+.profile-share:hover {
+    background-color: var(--color-info-dark);
+    color: var(--color-info-light);
+}
+
+.profile-message {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: calc(var(--spacing-gutter-extra-small) / 2);
+    background-color: var(--color-success-light);
+    border: .15rem solid var(--color-success-dark);
+    color: var(--color-success-dark);
+    transition: all 250ms ease-in-out;
+}
+
+.profile-message:hover {
+    background-color: var(--color-success-dark);
+    color: var(--color-success-light);
+}
+
+.profile-report {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: calc(var(--spacing-gutter-extra-small) / 2);
+    background-color: var(--color-error-light);
+    border: .15rem solid var(--color-error-dark);
+    color: var(--color-error-dark);
+    transition: all 250ms ease-in-out;
+}
+
+.profile-report:hover {
+    background-color: var(--color-error-dark);
+    color: var(--color-error-light);
+}
+
+
+.profile-about {
+    margin: var(--spacing-gutter-extra-small);
+}
+
+.profile-about h2 {
+    padding-bottom: calc(var(--spacing-gutter-extra-small) / 2);
+}
+
+.profile-owned {
+    margin: var(--spacing-gutter-extra-small);
+}
+
+.profile-owned-title {
+    text-align: center;
+    border-bottom: .15rem solid var(--color-black);
+}
+
+.profile-company-list {
+    display: grid;
+    grid-template-columns: 23.7% 23.7% 23.7% 23.7%;
+    gap: var(--spacing-gutter-extra-small);
+    padding: var(--spacing-gutter-extra-small);
+}
+
+.profile-company-card {
+    width: 100%;
+    border-radius: 10px;
+    border: .15rem solid var(--color-black);
+    box-shadow: -.5rem .5rem 1rem rgba(0, 0, 0, .2);
+}
+
+.profile-company-card a {
+    text-decoration: none;
+    color: var(--color-black);
+}
+
+.company-card-cover {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.company-card-cover img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    border-bottom: .15rem solid var(--color-black);
+}
+
+.company-name {
+    width: 100%;
+    text-align: center;
+    border: none;
+}

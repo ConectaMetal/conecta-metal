@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Companies, Products, SocialMedia, Services, UserProfile, Address, ShoppingCart
+from .models import Companies, Products, SocialMedia, Services, UserProfile, Employee, Address, ShoppingCart
 
 # Register your models here.
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    ...
+
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
     ...
 
 @admin.register(Address)

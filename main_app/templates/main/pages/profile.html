@@ -1,0 +1,80 @@
+{% extends "main/base/base.html" %}
+
+{% load static %}
+
+{% block static %}
+    <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+{% endblock static %}
+
+{% block title %}{{ profile.user.username }}{% endblock title %}
+
+{% block content %}
+    <div class="profile-container">
+
+        <div class="profile-identification">
+            <div class="profile-picture {{ profile.serviceTer }}">
+                {% if profile.picture %}
+                    <img src="{{ profile.picture.url }}" alt="">
+                {% else %}
+                    <img src="{% static "main/img/no_profile_picture.png" %}" alt="">
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <div class="profile-names">
+                    <h1 class="profile-name">{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+                    <h2 class="profile-username">@{{ profile.user.username }}</h2>
+                </div>
+                <div class="profile-email">
+                    <i class="fa-solid fa-envelope"></i> E-mail: {{ profile.user.email }}
+                </div>
+                {% if profile.phone %}
+                    <div class="profile-phone">
+                        <i class="fa-solid fa-phone"></i> Contato: {{ profile.phone }}
+                    </div>
+                {% endif %}
+                {% if companies_working %}
+                    <div class="profile-companies">
+                        {% for company in companies_working %}
+                            <p>Funcionário da empresa <a href="{% url "main_app:company" company.company.slug %}">{{ company.company.businessName }}</a></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+                <div class="profile-buttons">
+                    <button class="profile-share">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </button>
+                    <button class="profile-message">
+                        <i class="fa-solid fa-message"></i>
+                    </button>
+                    <button class="profile-report">
+                        <i class="fa-solid fa-flag"></i>
+                    </button>
+                </div>
+            
+        </div>  
+    </div>
+
+    {% if profile.aboutMe %}
+        <div class="profile-container profile-repeat">
+            <div class="profile-about">
+                <h2>Sobre mim:</h2>
+                <p>{{ profile.aboutMe }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if companies_owned %}
+        <div class="profile-container profile-repeat">
+            <div class="profile-owned">
+                <h2 class="profile-owned-title">Empresas Gerenciadas pelo Usuário</h2>
+                <div class="profile-company-list">
+                    {% for company in companies_owned %}
+                        {% include "main/partials/profile-company-card.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
+

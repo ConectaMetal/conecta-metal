@@ -28,6 +28,7 @@ class UserProfile(models.Model):
     CPF = models.CharField(max_length=14, unique=True)
     picture = models.ImageField(upload_to='main/user/picture/%Y/%m/%d/', null=True, blank=True, default=None)
     aboutMe = models.TextField(null=True, blank=True, default=None)
+    phone = models.CharField(max_length=255, null=True, blank=True, default=None)
     serviceTer = models.CharField(
         max_length=8, choices=ServiceTierName.choices, default=ServiceTierName.Nenhum
     )
@@ -36,7 +37,7 @@ class UserProfile(models.Model):
     )
 
     def __str__(self):
-        return self.CPF
+        return self.user.username
     
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
@@ -59,6 +60,23 @@ class Companies(models.Model):
 
     def __str__(self):
         return self.legalName
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+
+
+class Employee(models.Model):
+    employee = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
+    company = models.ForeignKey(
+        Companies, on_delete=models.CASCADE, null=True, blank=True
+    )
+    companyPosition = models.CharField(max_length=255)
+    businessEmail = models.EmailField(null=True, blank=True)
+
+    def __str__(self):
+        return self.employee.user.username + ' - ' + self.company.legalName
 
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)

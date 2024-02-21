@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
-from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart
+from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart, Employee
 from utils.pagination import make_pagination
 from .forms import LoginForm, SignUpForm, AddToCartForm
 
@@ -43,32 +43,31 @@ def home(request):
                 form.save()
     else:
         form = AddToCartForm()
+    form = AddToCartForm()
 
     user_profile = UserProfile.objects.filter(
         user=request.user
     ).first()
 
-    form = AddToCartForm()
-
-    page_object, pagination_range = make_pagination(request, products, PER_PAGE)
-
     cart_products = ShoppingCart.objects.filter(
         client__user = request.user
     ).order_by('-id')
+
+    page_object, pagination_range = make_pagination(request, products, PER_PAGE)
 
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
     context = {
-        'user_profile': user_profile,
-        'products': page_object, 
-        'show_products': True,
-        'search_term': search_term,
-        'pagination_range': pagination_range,
         'additional_url_query': additional_query_string,
         'form': form,
+        'pagination_range': pagination_range,
+        'products': page_object, 
         'products_amount': products_amount,
+        'search_term': search_term,
+        'show_products': True,
+        'user_profile': user_profile,
     }
 
     return render(request=request, template_name='main/pages/home.html', context=context)
@@ -105,9 +104,9 @@ def product(request, slug):
         products_amount += cart_product.amount
 
     context = {
+        'form': form,
         'product': product,
         'products_amount': products_amount,
-        'form': form,
         'user_profile': user_profile,
         }
 
@@ -115,7 +114,7 @@ def product(request, slug):
 
 
 @login_required(login_url='main_app:login', redirect_field_name='next')
-def service(request):
+def services(request):
 
     search_term = request.GET.get('q', '').strip()
 
@@ -132,25 +131,99 @@ def service(request):
         ).order_by('-id')
         additional_query_string = f'&q={search_term}'
 
-    page_object, pagination_range = make_pagination(request, services, PER_PAGE)
-
     cart_products = ShoppingCart.objects.filter(
         client__user = request.user
     ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    page_object, pagination_range = make_pagination(request, services, PER_PAGE)
 
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
     context = {
-        'services': page_object, 
-        'search_term': search_term,
-        'pagination_range': pagination_range,
         'additional_url_query': additional_query_string,
+        'pagination_range': pagination_range,
         'products_amount': products_amount,
+        'search_term': search_term,
+        'services': page_object, 
+        'user_profile': user_profile,
     }
 
     return render(request=request, template_name='main/pages/services.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def service(request, slug):
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/services.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def requests(request):
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/requests.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def request(request, slug):
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/request.html', context=context)
 
 
 @login_required(login_url='main_app:login', redirect_field_name='next')
@@ -175,19 +248,108 @@ def company(request, slug):
         client__user = request.user
     ).order_by('-id')
 
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
     context = {
         'company': company, 
-        'products': products, 
+        'products': products,
+        'products_amount': products_amount,
         'services': services,
         'social_medias': social_medias,
-        'products_amount': products_amount,
+        'user_profile': user_profile,
     }
 
     return render(request=request, template_name='main/pages/company.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def profile(request, slug):
+
+    profile = get_object_or_404(
+        UserProfile, user__username=slug
+    )
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    companies_owned = Companies.objects.filter(
+        owner__CPF=profile.CPF
+    )
+
+    companies_working = Employee.objects.filter(
+        employee__CPF=profile.CPF
+    )
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'companies_owned': companies_owned,
+        'companies_working': companies_working,
+        'products_amount': products_amount,
+        'profile': profile,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/profile.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def dashboard(request):
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/dashboard.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def historic(request):
+
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    context = {
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/historic.html', context=context)
 
 
 def register_view(request):
@@ -195,7 +357,6 @@ def register_view(request):
     form = SignUpForm(sign_up_form_data)
 
     context = {
-        'is_sign_page': True,
         'form': form,
     }
 
@@ -225,7 +386,6 @@ def login_view(request):
 
     context = {
         'form': form,
-        'is_sign_page': True,
     }
 
     return render(request=request, template_name='main/pages/login.html', context=context)
@@ -262,10 +422,6 @@ def logout_view(request):
     return redirect('main_app:login')
 
 
-def profile(request, slug):
-    ...
-
-
 @login_required(login_url='main_app:login', redirect_field_name='next')
 def shopping_cart(request):
     
@@ -289,10 +445,10 @@ def shopping_cart(request):
 
     context = {
         'cart_products': cart_products,
-        'products_amount': products_amount,
-        'products_value': products_value,
-        'products_freight': products_freight,
+        'products_amount': products_amount,        
         'products_final_value': products_final_value,
+        'products_freight': products_freight,
+        'products_value': products_value,
         'user_profile': user_profile,
     }
 
@@ -333,3 +489,26 @@ def shopping_edit(request):
         raise Http404()
 
     return redirect('main_app:shopping')
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def about_us(request):
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+
+    context = {
+        'products_amount': products_amount, 
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/about-us.html', context=context)

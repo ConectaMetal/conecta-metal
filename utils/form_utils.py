@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from validate_docbr import CPF
 import re
 
 
@@ -43,3 +44,9 @@ def valid_cep(cep):
     if not regex.match(clear_cep):
         raise ValidationError('CEP inválido')
     
+
+def valid_cpf(cpf):
+    cpf_validador = CPF()
+
+    if not cpf_validador.validate(cpf):
+        raise ValidationError('CPF inválido')

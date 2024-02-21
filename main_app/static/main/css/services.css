@@ -1,3 +1,27 @@
+/* SERVICE LIST */
+
+.main-services-container {
+    width: 100%;
+    margin:  0 0 var(--spacing-gutter-large) 0;
+}
+
+.main-services-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--spacing-gutter-medium);
+    padding: var(--spacing-gutter-small);
+    background-color: rgba(224, 224, 224, .75);
+}
+
+@media (max-width: 600px) {
+    .main-services-list {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
+}
+
+/* SERVICE CARD */
+
 .service-card {
     /* max-width: 32rem; */
     max-width: 385px;
