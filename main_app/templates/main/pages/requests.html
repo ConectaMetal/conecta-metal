@@ -12,20 +12,39 @@
 {% block content %}
     <div class="requests-owner">
         <div class="requests-owner-title">
+            <div class="request-owner-left">
+                <div class="request-owner-new">
+                    <a href="">
+                        <i class="fa-solid fa-plus"></i>
+                        <h2>Adicionar Pedido</h2>
+                    </a>
+                </div>
+            </div>
             <h1>Seus Pedidos</h1>
+            <div class="request-owner-right">
+                
+            </div>
         </div>
-        <div class="requests-owner-list">
-            {% for request in user_requests %}
-                {% include "main/partials/requests-card.html" %}
-            {% endfor %}
-        </div>
+        {% if not user_requests %}
+            <div class="requests-owner-not-found">
+                <div class="requests-owner-message">
+                    <h2>Você ainda não requisitou nenhum pedido!</h2>
+                </div>
+            </div>
+        {% else %}
+            <div class="requests-owner-list">
+                {% for request in user_requests %}
+                    {% include "main/partials/requests-card.html" %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-    {% if others_requests %}
+    {% if user_profile.serviceTier != 'Nenhum' %}
         <div class="requests-others">
             <div class="requests-others-title">
                 <h1>Outros Pedidos</h1>
             </div>
-            {% include "main/partials/search.html" %}
+            {% include "main/partials/search.html" %}      
             <div class="requests-others-list">
                 {% for request in others_requests %}
                     {% include "main/partials/requests-card.html" %} 

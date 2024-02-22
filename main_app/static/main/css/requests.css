@@ -11,6 +11,62 @@
     width: 100%;
     text-align: center;
     border-bottom: .2rem solid var(--color-black);
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.requests-owner-title h1 {
+    width: 50%;
+}
+
+.request-owner-right,
+.request-owner-left {
+    width: 25%;
+}
+
+.request-owner-new {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-owner-new a {
+    width: fit-content;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--color-black);
+}
+
+.request-owner-new a i {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: .5rem;
+}
+
+.request-owner-new a:hover {
+    color: var(--color-primary);
+}
+
+.requests-owner-not-found {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.requests-owner-message {
+    margin: var(--spacing-gutter-small);
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-dark-text);
+    background: var(--color-gray-2);
+    color: var(--color-dark-text);
+    width: fit-content;
 }
 
 .requests-owner-list {
