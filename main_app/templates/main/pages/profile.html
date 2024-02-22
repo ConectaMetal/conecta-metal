@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block static %}
+    <script src="{% static "main/js/script.js" %}"></script>
     <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
 {% endblock static %}
 
@@ -44,10 +45,10 @@
                     <button class="profile-share">
                         <i class="fa-solid fa-share-nodes"></i>
                     </button>
-                    <button class="profile-message">
+                    <a class="profile-message" href="https://wa.me/{{ profile.phone }}?text=Olá, vi seu perfil no Conecta Metal." target="_blank">
                         <i class="fa-solid fa-message"></i>
-                    </button>
-                    <button class="profile-report">
+                    </a>
+                    <button class="profile-report" onclick="reportUser('{{ profile.user.username }}')">
                         <i class="fa-solid fa-flag"></i>
                     </button>
                 </div>

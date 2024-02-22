@@ -4,7 +4,7 @@
 }
 
 .requests-owner {
-    margin: var(--spacing-gutter-large) var(--spacing-gutter-medium);
+    margin: var(--spacing-gutter-large) var(--spacing-gutter-medium) 0 var(--spacing-gutter-medium);
 }
 
 .requests-owner-title {
@@ -14,11 +14,30 @@
 }
 
 .requests-owner-list {
-    margin: var(--spacing-gutter-small);
+    padding: var(--spacing-gutter-small);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-gutter-extra-small);
 }
+
+.requests-others {
+    margin: var(--spacing-gutter-large) var(--spacing-gutter-medium) 0 var(--spacing-gutter-medium);
+}
+
+.requests-others-title {
+    width: 100%;
+    text-align: center;
+    border-bottom: .2rem solid var(--color-black);
+}
+
+.requests-others-list {
+    padding: 0 var(--spacing-gutter-small) var(--spacing-gutter-medium) var(--spacing-gutter-small);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-gutter-extra-small);
+}
+
+/* CARD */
 
 .requests-card {
     width: 100%;
@@ -60,13 +79,22 @@
     align-items: end;
 }
 
-.request-card-type {
-    width: 30%;
+.request-card-owner a {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    text-decoration: none;
 }
 
-.request-card-owner {
-    width: 30%;
+.request-card-owner h4 {
+    color: var(--color-gray-9);
+    transition: all 300ms ease-in-out;
 }
+
+.request-card-owner a:hover h4 {
+    color: var(--color-primary);
+}
+
 
 .request-card-owner img {
     width: 32px;
@@ -75,4 +103,27 @@
     margin-right: .5rem;
     background-color: rgba(0, 0, 0, .15);
     border: .1rem solid rgba(0, 0, 0, .2);
+}
+
+.requests-card-button {
+    width: 10%;
+    height: 100%;
+    border: .15rem solid var(--color-black);
+    border-left: none;
+    background-color: var(--color-gray-5);
+    display: flex;
+}
+
+.requests-card-button button {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-gray-5);
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
+.requests-card-button button:hover {
+    background-color: var(--color-gray-6);
+    color: var(--color-primary);
 }

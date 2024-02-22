@@ -27,7 +27,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     CPF = models.CharField(max_length=14, unique=True)
-    picture = models.ImageField(upload_to=mu.profile_image_upload, null=True, blank=True, default=None)
+    picture = models.ImageField(upload_to=mu.profile_image_upload, null=True, blank=True, default='/main/default/no_profile_picture.png')
     aboutMe = models.TextField(null=True, blank=True, default=None)
     phone = models.CharField(max_length=255, null=True, blank=True, default=None)
     serviceTer = models.CharField(
@@ -162,6 +162,7 @@ class Requests(models.Model):
     owner = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, null=True, blank=True
     )
+    concluded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

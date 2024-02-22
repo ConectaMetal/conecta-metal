@@ -77,6 +77,11 @@
 
 .profile-phone {
     width: 100%;
+    margin-bottom: var(--spacing-gutter-extra-small);
+}
+
+.profile-companies {
+    margin-bottom: var(--spacing-gutter-extra-small);
 }
 
 .profile-companies a{
@@ -108,6 +113,10 @@
 }
 
 .profile-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     width: 2rem;
     height: 2rem;
     margin-bottom: calc(var(--spacing-gutter-extra-small) / 2);

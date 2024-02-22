@@ -14,8 +14,10 @@
             </div>
             <div class="request-card-owner">
                 <a href="{% url "main_app:profile" request.owner.user.username %}">
-                    <img src="{{ request.owner.picture.url }}" alt="">
-                    {{ request.owner.user.username }}
+                    {% if request.owner.picture %}
+                        <img src="{{ request.owner.picture.url }}" alt="">
+                    {% endif %}
+                    <h4>{{ request.owner.user.username }}</h4>
                 </a>
             </div>
         </div>

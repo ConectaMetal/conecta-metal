@@ -17,10 +17,23 @@
         <div class="requests-owner-list">
             {% for request in user_requests %}
                 {% include "main/partials/requests-card.html" %}
-                {% include "main/partials/requests-card.html" %}
-                {% include "main/partials/requests-card.html" %}
             {% endfor %}
         </div>
     </div>
-    {% include "main/partials/search.html" %}
+    {% if others_requests %}
+        <div class="requests-others">
+            <div class="requests-others-title">
+                <h1>Outros Pedidos</h1>
+            </div>
+            {% include "main/partials/search.html" %}
+            <div class="requests-others-list">
+                {% for request in others_requests %}
+                    {% include "main/partials/requests-card.html" %} 
+                {% endfor %}
+            </div>
+            {% if others_requests.has_other_pages %}
+                {% include "main/partials/pagination.html" %}
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock content %}

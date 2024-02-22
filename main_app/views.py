@@ -193,21 +193,37 @@ def requests(request):
 
     user_requests = Requests.objects.filter(
         owner=user_profile
-    ).order_by('-id')
+    ).order_by('-id')    
+
+    search_term = request.GET.get('q', '').strip()
 
     if user_profile.serviceTer != 'Nenhum':
-        others_requests = Requests.objects.filter(
-            ~Q(owner=user_profile)
-        ).order_by('-id')
+        if not search_term:
+            others_requests = Requests.objects.filter(
+                ~Q(owner=user_profile),
+                Q(concluded=False)
+            ).order_by('-id')
+            additional_query_string = ''
+        else:
+            others_requests = Requests.objects.filter(
+                Q(name__icontains=search_term),
+                ~Q(owner=user_profile),
+                Q(concluded=False)
+            ).order_by('-id')
+            additional_query_string = f'&q={search_term}'
     else:
         others_requests = None
+
+    page_object, pagination_range = make_pagination(request, others_requests, PER_PAGE)
 
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
     context = {
-        'others_requests': others_requests,
+        'additional_query_string': additional_query_string,
+        'pagination_range': pagination_range,
+        'others_requests': page_object, 
         'products_amount': products_amount,
         'user_profile': user_profile,
         'user_requests': user_requests,
