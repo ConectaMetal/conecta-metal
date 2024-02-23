@@ -352,6 +352,9 @@ def dashboard(request):
     for cart_product in cart_products:
         products_amount += cart_product.amount
 
+    if user_profile.serviceTer == 'Nenhum':
+        return redirect('main_app:home')
+
     context = {
         'products_amount': products_amount,
         'user_profile': user_profile,
@@ -363,6 +366,7 @@ def dashboard(request):
 
 @login_required(login_url='main_app:login', redirect_field_name='next')
 def register_company_view(request):
+
     cart_products = ShoppingCart.objects.filter(
         client__user = request.user
     ).order_by('-id')
@@ -374,6 +378,9 @@ def register_company_view(request):
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
+
+    if user_profile.serviceTer == 'Nenhum':
+        return redirect('main_app:home')
 
     company_form_data = request.session.get('company_form_data', None)
     form = RegisterCompanyForm(company_form_data)
@@ -393,19 +400,23 @@ def register_company_create(request):
         raise Http404()
 
     POST = request.POST
+    FILES = request.FILES
     request.session['company_form_data'] = POST
-    form = RegisterCompanyForm(POST)
+    form = RegisterCompanyForm(POST, FILES)
 
     user_profile = UserProfile.objects.filter(
         user=request.user
     ).first()
+
+    if user_profile.serviceTer == 'Nenhum':
+        return redirect('main_app:home')
 
     if form.is_valid():
         form.save(user_profile)
         messages.success(request, 'Empresa criada com sucesso.')
 
         del(request.session['company_form_data'])
-        return redirect('main_app:home')
+        return redirect('main_app:company_view')
 
     return redirect('main_app:dashboard')
 
