@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from main_app.models import Products, Companies, SocialMedia, Services, UserProfile, ShoppingCart, Employee, Requests
 from utils.pagination import make_pagination
-from .forms import LoginForm, SignUpForm, AddToCartForm
+from .forms import LoginForm, SignUpForm, AddToCartForm, RegisterCompanyForm
 
 import os
 
@@ -344,6 +344,10 @@ def dashboard(request):
         user=request.user
     ).first()
 
+    user_companies = Companies.objects.filter(
+        owner = user_profile
+    ).order_by('-id')
+
     products_amount = 0
     for cart_product in cart_products:
         products_amount += cart_product.amount
@@ -351,9 +355,59 @@ def dashboard(request):
     context = {
         'products_amount': products_amount,
         'user_profile': user_profile,
+        'user_companies': user_companies,
     }
 
     return render(request=request, template_name='main/pages/dashboard.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def register_company_view(request):
+    cart_products = ShoppingCart.objects.filter(
+        client__user = request.user
+    ).order_by('-id')
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    products_amount = 0
+    for cart_product in cart_products:
+        products_amount += cart_product.amount
+
+    company_form_data = request.session.get('company_form_data', None)
+    form = RegisterCompanyForm(company_form_data)
+
+    context = {
+        'form': form,
+        'products_amount': products_amount,
+        'user_profile': user_profile,
+    }
+
+    return render(request=request, template_name='main/pages/register-company.html', context=context)
+
+
+@login_required(login_url='main_app:login', redirect_field_name='next')
+def register_company_create(request):
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    request.session['company_form_data'] = POST
+    form = RegisterCompanyForm(POST)
+
+    user_profile = UserProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    if form.is_valid():
+        form.save(user_profile)
+        messages.success(request, 'Empresa criada com sucesso.')
+
+        del(request.session['company_form_data'])
+        return redirect('main_app:home')
+
+    return redirect('main_app:dashboard')
 
 
 @login_required(login_url='main_app:login', redirect_field_name='next')

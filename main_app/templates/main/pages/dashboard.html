@@ -3,11 +3,29 @@
 {% load static %}
 
 {% block static %}
-    
+    <link rel="stylesheet" href="{% static 'main/css/dashboard.css' %}">
 {% endblock static %}
 
 {% block title %}Painel de Controle{% endblock title %}
 
 {% block content %}
-    
+    <div class="dashboard-container">
+        <div class="dashboard-title">
+            <div class="dashboard-title-left">
+                <div class="dashboard-new-company">
+                    <a href="{% url "main_app:company_view" %}">
+                        <i class="fa-solid fa-plus"></i>
+                        <h2>Adicionar Empresa</h2>
+                    </a>
+                </div>
+            </div>
+            <h1>Suas Empresas</h1>
+            <div class="dashboard-title-right"></div>
+        </div>
+        <div class="dashboard-content">
+            {% for company in user_companies %}
+                {% include "main/partials/dashboard-company-card.html" %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}

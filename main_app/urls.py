@@ -12,6 +12,10 @@ urlpatterns = [
     path('requests/', views.requests, name="requests"),
     path('requests/<slug:slug>', views.request, name="request"),
 
+    # Company Register Paths
+    path('dashboard/company/', views.register_company_view, name="company_view"),
+    path('dashboard/company/create', views.register_company_create, name="company_create"),
+
     # Profile paths
     path('company/<slug:slug>/', views.company, name="company"),
     path('profile/<slug:slug>/', views.profile, name="profile"),

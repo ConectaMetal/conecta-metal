@@ -200,6 +200,5 @@ class SignUpForm(forms.Form):
             CPF=cpf,
             address=address
         )
-        print('salvei')
 
         return user, profile

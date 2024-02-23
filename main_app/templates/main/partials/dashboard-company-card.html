@@ -1,0 +1,14 @@
+<div class="dashboard-card-container">
+    <div class="dashboard-card-cover">
+        {% if company.profilePic %}
+            <img src="{{ company.profilePic.url }}" alt="">
+        {% endif %}
+    </div>
+    <div class="dashboard-card-names">
+        <h2>{{ company.businessName }}</h2>
+        <h3>{{ company.legalName }}</h3>
+    </div>
+    <div class="dashboard-card-edit">
+        <button><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+    </div>
+</div>

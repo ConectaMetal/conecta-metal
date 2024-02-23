@@ -1,0 +1,29 @@
+{% extends "main/base/base.html" %}
+
+{% load static %}
+
+{% block static %}
+    <link rel="stylesheet" href="{% static 'main/css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/message.css' %}">
+{% endblock static %}
+
+{% block title %}Cadastrar Empresa{% endblock title %}
+
+{% block content %}
+    <div class="form-container">
+        <div class="form-content">
+            <h2>Cadastrar Empresa</h2>
+            <form action="{% url "main_app:company_create" %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% include "main/partials/form.html" %}
+
+                {% include 'main/partials/messages.html' %}
+
+                <div class="form-item form-button">
+                    <button type="submit">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

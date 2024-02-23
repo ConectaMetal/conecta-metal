@@ -17,6 +17,13 @@ def clear_text(text):
     return new_text
 
 
+def create_slug(text):
+    slug = text.strip()
+    slug = "_".join(slug.split())
+    slug = slug.lower()
+    return slug
+
+
 def clear_data(data):
     data = re.sub(r'[^a-zA-Z0-9]', ' ', data)
     clear_data = ''.join(data.split())
@@ -50,3 +57,4 @@ def valid_cpf(cpf):
 
     if not cpf_validador.validate(cpf):
         raise ValidationError('CPF inválido')
+    
