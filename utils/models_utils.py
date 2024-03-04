@@ -1,5 +1,5 @@
 def product_image_upload(instance, filename):
-    company_name = instance.company.name
+    company_name = instance.company.legalName
     product_name = instance.name
     path = f'main/companies/{company_name}/products/{product_name}/{filename}'
     
@@ -7,7 +7,7 @@ def product_image_upload(instance, filename):
 
 
 def service_image_upload(instance, filename):
-    company_name = instance.company.name
+    company_name = instance.company.legalName
     service_name = instance.name
     path = f'main/companies/{company_name}/services/{service_name}/{filename}'
     
